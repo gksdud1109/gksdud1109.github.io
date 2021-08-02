@@ -101,9 +101,9 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "정한영"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
+  bio              : "growing up"
   location         : "Somewhere"
   email            :
   links:
@@ -146,7 +146,7 @@ footer:
       # url:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
-      # url:
+      url: "https://www.instagram.com/0one_zer0/"
 
 
 # Reading Files
