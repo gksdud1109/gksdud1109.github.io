@@ -104,12 +104,12 @@ author:
   name             : "정한영"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "hello"
-  location         : "Somewhere"
-  email            : "vectorh532@gmail.com"
+  location         : "Somewhere in Korea"
+  email            : 
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      # url: "mailto:your.name@email.com"
+      url: "mailto:vectorh532@gmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
