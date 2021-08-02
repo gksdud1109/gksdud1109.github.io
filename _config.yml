@@ -103,7 +103,7 @@ analytics:
 author:
   name             : "정한영"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "growing up"
+  bio              : "hello"
   location         : "Somewhere"
   email            : "vectorh532@gmail.com"
   links:
@@ -121,7 +121,7 @@ author:
       # url: "https://facebook.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/gksdud1109"
+      # url: "https://github.com/gksdud1109"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       url: "https://www.instagram.com/0one_zer0/"
