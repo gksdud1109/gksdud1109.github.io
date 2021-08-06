@@ -19,14 +19,14 @@ locale                   : "ko-KR"
 title                    : "정한영의 기술블로그"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "정한영"
+name                     : "Jeong HanYoung"
 description              : "An amazing website."
 url                      : "https://gksdud1109.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "gksdud1109/gksdud109.github.com"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
-masthead_title           : "정한영의 기술블로그"
+masthead_title           : " "
 # breadcrumbs            : true
 words_per_minute         : 200
 comments:
@@ -217,7 +217,7 @@ sass:
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
-timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: Asia/Seoul # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # Plugins (previously gems:)
