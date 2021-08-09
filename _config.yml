@@ -16,11 +16,11 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 
 # Site Settings
 locale                   : "ko-KR"
-title                    : "정한영의 기술블로그"
+title                    : "공부기록"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "Jeong HanYoung"
-description              : "An amazing website."
+name                     : ""
+description              : ""
 url                      : "https://gksdud1109.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "gksdud1109/gksdud109.github.com"
@@ -103,7 +103,7 @@ analytics:
 author:
   name             : "정한영"
   avatar           : "/restaurant.jpg"
-  bio              : "공부 기록하는 블로그입니다"
+  bio              : "개인 공부 기록용 블로그입니다."
   location         : "Korea"
   email            : 
   links:
