@@ -1,7 +1,7 @@
 ---
 title: About
 permalink: /about/
-layot: single
+layout: single
 ---
 
 ## 정 한영
