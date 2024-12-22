@@ -15,7 +15,7 @@ last_modified_at: 2024-12-22
 
 ## Chapter 3
 
-- residing : 거주하는 </br>
+- residing : 거주하는
   ![image](posts_img/english_dic/residing.jpg)
 
 - pedagogic : 교수법의
