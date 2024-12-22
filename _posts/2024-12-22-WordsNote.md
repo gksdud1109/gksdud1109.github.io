@@ -16,14 +16,14 @@ last_modified_at: 2024-12-22
 ## Chapter 3
 
 - residing : 거주하는 </br>
-  ![image](posts_img/english_dic/residing.png)
+  ![image](posts_img/english_dic/residing.jpg)
 
 - pedagogic : 교수법의
-  ![image](posts_img/english_dic/pedagogy.png)
+  ![image](posts_img/english_dic/pedagogy.jpg)
 
 - emphasis : 강조, 주안점
 
 - examine : 조사하다
 
 - confrint : 닥치다
-  ![image](posts_img/english_dic/confront.png)
+  ![image](posts_img/english_dic/confront.jpg)
