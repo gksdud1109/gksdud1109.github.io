@@ -22,7 +22,7 @@ subtitle: # site tagline that appears below site title in masthead
 name: ""
 description: ""
 url: "https://gksdud1109.github.io"
-baseurl: "/tree/master"
+baseurl: # the subpath of your site, e.g. "/blog"
 repository: "gksdud1109/gksdud109.github.com"
 teaser: # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo: # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
@@ -271,7 +271,6 @@ defaults:
       path: ""
       type: posts
     values:
-      image: true
       layout: single
       author_profile: true
       read_time: true
