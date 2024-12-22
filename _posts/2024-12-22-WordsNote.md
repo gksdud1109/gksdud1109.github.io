@@ -1,5 +1,5 @@
 ---
-title: "24_12_22 영어단어 정리"
+title: "영어단어 정리 24_12_22"
 excerpt: "Computer Networking A Top-Down Approach 8th. 원서 영어단어 정리"
 
 categories:
@@ -237,4 +237,222 @@ last_modified_at: 2024-12-22
 
 ### 101~110
 
--
+- deviate : 벗어나다(일상, 예상 등을)
+
+- for the time being : 당분간
+
+- premature : <br>1. 정상[예상]보다 이른<br>2. 조산의 <br>3. 너무이른, 시기상조의
+
+- associated : <br>1. 관련된<br>2. 지지하는<br>3. 연합[조합]의
+
+- subtlety : <br>1. 미묘함; 교묘함, 절묘한; 예민함<br>2. 중요한 세부 요소[사항]들
+
+- subtle :<br>1.미묘한, 감지하기 힘든<br>2.교묘한, 영리한<br>3. 절묘한
+
+- rather then : ~보다는
+
+- rather : 꽤, 약간, 상당히
+
+- politely : 공손히, 예의바르게; 고상하게, 품위 있게
+
+- polite : <br>1. 예의바른, 공손한, 정중한 <br>2. 예의상의, 의례적인<br>3. 고상한
+
+### 111~120
+
+- subsequent : 그 다음의, 차후의
+
+- snippet : <br>1.(작은) 정보 <br>2. (대화,음악등의) 한토막
+
+- savvy : <br>1. 지식, 상식, 요령<br>2. 요령 있는
+
+- throughout : <br>1. 도처에 <br>2. ~동안 쭉, 내내
+
+- obscure : <br>1. 무명의, 잘 알려져 있지 않은 <br>2. 이해하기 힘든, 모호한
+
+- manipulate : 조종하다
+
+- denominator : 분모
+
+- numerator : 분자
+
+- manifest : 나타내다
+
+- aggregate : 합계, 총액
+
+### 121~130
+
+- a bit of a stretch : 과장
+
+- compensate : 보상하다
+
+- premature : <br>1. 정상보다 이른 <br>2. 조산의<br>3. 너무 이른, 시기상조의
+
+- asymptotic : 점근선의
+
+- asymptote : 점근선
+
+- eventual : 궁극적인
+
+- bad off : 가난, 곤궁
+
+- well off : 부유한
+
+- idle : <br>1. 게으른, 나태한 <br>2. 가동되지 않는 <br>3. 특별히 하는 일 없이 보내다
+
+- profit : 이익, 수익, 이윤
+
+### 131~140
+
+- profitable : <br>1. 수익성이 있는 <br>2. 이득이 되는, 유익한
+
+- evidence : <br>1. 증거, 흔적 <br>2. (법정에 제출되는) 증거[증언]<br>3. 증언하다, 증거가 되다
+
+- evident : 분명한, 눈에 띄는
+
+- infer : <br>1. 추론하다<br>2. (간접적으로)뜻하다, 암시하다
+
+- inffered : 추론된
+
+- indication : (사정, 생각, 감정을 보여주는) 말[암시/조짐]
+
+- sophisticated : <br>1. 세련된, 교양있는 <br>2. 정교한, 복잡한 <br>3. 지적인, 수준 높은
+
+- adopt : <br>1. 입양하다 <br>2. 쓰다 <br>3. 채택하다
+
+- latter : <br>1. (둘중에서)후자의, (나열된 것들 중에서)마지막의 <br>2. (둘중에서)후자, (나열된 것들 중에서)마지막
+
+- perceive : <br>1. 감지하다 <br>2. ~을 (~로) 여기다
+
+### 141~150
+
+- perceived : 인지된
+
+- oppose : <br>1. 반대하다 <br>2. 겨루다
+
+- henceforth : ...이후로
+
+- solely : 오로지, 단지; 단독으로
+
+- indirectly : 간접적으로, 부차적으로
+
+- adjust : <br>1. 조정하다 <br>2. 적응하다 <br>3. 바로잡다[정돈하다]
+
+- occurrence : <br>1. 발생하는 것<br>2. 발생, 존재, 나타남
+
+- excessive : 지나친, 과도한
+
+- in turn : <br>1. 차례차례 <br>2. 결국
+
+- indeed : <br>1. (긍정적인 진술·대답을 강조하여) 정말[확실히]<br>2. (‘very+ 형용사/부사’ 뒤에서 진술·묘사 등을 강조하여) 정말[참으로]<br>3. (진술 내용을 덧붙일 때) 사실[실은]
+
+### 151~160
+
+- coordinate : <br>1. 조직화하다 <br>2. 조정하다 <br>3. 좌표 <br>4. 함께 잘 어울리는 옷들
+
+- probing : <br>1. 진실을 캐기 위한 <br>2. 면밀히 살피는
+
+- probe : <br>1. 캐묻다, 캐다, 조사하다<br>2. (특히 길고 가느다란 기구로) 살피다[탐사/탐색하다]<br>3. (철저한) 조사<br>4.무인 우주 탐사선
+
+- madatory : 법에 정해진, 의무적인
+
+- differing : 상이한
+
+- resulting : 결과로 초래된
+
+- around the corner : <br>1. 목전에 있는 <br>2. 코앞에 와있는
+
+- conservative : <br>1. 보수적인 <br>2. 영국 보수당의 <br>3. 보수주의자, 보수적인 사람
+
+- conserve : <br>1. 아끼다, 아껴 쓰다<br>2. 보호[보존]하다<br>3. (과일을 통째로나 굵게 썰어 만든) 과일 설탕 조림
+
+- drastic : 과감한, 극단적인
+
+### 161~170
+
+- halves : half의 복수형
+
+- half : <br>1. 반, 절반<br>2. (경기·콘서트 등의) 전반[후반]<br>3. 반[절반](의)<br>4. 그 시간, 재미, 문제 등의 가장 큰 부분[대부분]
+
+- halving : 이등분
+
+- deflate : <br>1. 공기를 빼다, 오므라들다 <br>2. 기를 꺾다<br>3. 끌어내리다, 수축시키다
+
+- unconditional : 무조건적인
+
+- retrospective : <br>1. 회고하는 <br>2. 소급 적용되는
+
+- delve : (무엇을 찾으려 가방 등을) 뒤지다
+
+- worthwhile : 가치 있는, ... 할 가치가 있는
+
+- additive : 첨가물
+
+- saw : <br>1. 톱 <br>2. 속담, 격언 <br>3. 톱질하다, 톱으로 켜다
+
+### 171~180
+
+- sawtooth : 톱니
+
+- intuition : <br>1. 직관력<br>2. 직감, 직관
+
+- ramp up : ~을 늘리다
+
+- overall : <br>1. 종합적인, 전체의 <br>2. 전부, 종합적으로 <br>3. 대체로
+
+- derive : <br>1. 끌어내다, 얻다<br>2. ...에서 비롯되다, ...의 유래를 찾다<br>3. 유래하다, 파생하다, 나오다
+
+- outline : <br>1. 개요를 서술하다 <br>2. 윤곽을 보여주다 <br>3. 개요 <br>4. 윤곽
+
+- empirical : 경험에 의거한, 실증적인
+
+- vendor : <br>1. 행상인 <br>2. 판매회사 <br>3. 매도인
+
+- onset : (특히 불쾌한 일의) 시작
+
+- emanate : 발하다[내뿜다]
+
+### 181~190
+
+- joint : <br>1. 공동의, 합동의 <br>2. 관절 <br>3. 연결부위
+
+- coverage : <br>1. (신문, 텔레비전, 라디오 등의) 보도 <br>2. (책, 연구등에 포함된 정보의)범위 <br>3. 보급(률)
+
+- assumption : <br>1. 추정, 산정 <br>2. (권력의)인수[장악]
+
+- occasion : <br>1. (어떤 일이 일어나는 특정한) 때[기회/경우]<br>2. (특별한) 행사[의식/축하]<br>3. 격식 …의 원인이 되다, …을 야기하다
+
+- occasionally : 가끔
+
+- grinding : 끝도 없이 계속되는
+
+- halt : <br>1. 멈추다, 서다; 세우다, 중단시키다<br>2. 멈춤, 중단<br>3. (시골의) 간이역
+
+- pervade : 만연하다, (구석구석)스며들다
+
+- pervasive : 만연하는, (구석구석)스며드는
+
+- culminate : (~으로) 끝이 나다
+
+### 191~201
+
+- culmination : (오랫동안 계속된 일의) 정점
+
+- constrain : <br>1. ...하게 만들다 <br>2. ~에게 못하게 하다 <br>3. ~에게 제한하다
+
+- description : <br>1. 서술 <br>2. 일부, 온갖 종류 등의
+
+- intentionally : 고의로
+
+- blissful : 더없이 행복한
+
+- imperative : <br>1. 반드시 해야하는, 긴요한 <br>2. 위엄있는 <br>3. 긴요한 것
+
+- gridlock : <br>1. (도로상의 교통)정체 <br>2. 정체[교착]상태
+
+- multiplicative : <br>1. 증가하는, 증식의, 증식력 있는 <br>2. 곱셈의 <br>3. 배수사
+
+- multiplicatively : 증가하여, 증식력이 있어; 곱셈으로
+
+- strive : 분투하다
+
+- strife : 갈등, 불화, 다툼
