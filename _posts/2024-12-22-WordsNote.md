@@ -26,5 +26,4 @@ last_modified_at: 2024-12-22
 - examine : 조사하다
 
 - confrint : 닥치다
-  ![image](posts_img/english_dic/confront.jpg)
-  ![alt text](posts_img/english_dic/confront.jpg)
+  ![image](https://github.com/gksdud1109/gksdud1109.github.io/blob/master/_posts/posts_img/english_dic/confront.jpg)
