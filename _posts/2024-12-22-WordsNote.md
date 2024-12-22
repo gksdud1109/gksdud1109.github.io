@@ -13,9 +13,17 @@ last_modified_at: 2024-12-22
 
 # 24.12.22 영어단어 정리
 
-## 많이 밀렸다... 해야지해야지하고 미루다가...
-
 ## Chapter 3
 
-- residing : 거주하는
-  ![image](<posts_img/스크린샷 2024-12-22 13.44.39.png>)
+- residing : 거주하는 </br>
+  ![image](posts_img/english_dic/residing.png)
+
+- pedagogic : 교수법의
+  ![image](posts_img/english_dic/pedagogy.png)
+
+- emphasis : 강조, 주안점
+
+- examine : 조사하다
+
+- confrint : 닥치다
+  ![image](posts_img/english_dic/confront.png)
