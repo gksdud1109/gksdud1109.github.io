@@ -27,3 +27,4 @@ last_modified_at: 2024-12-22
 
 - confrint : 닥치다
   ![image](posts_img/english_dic/confront.jpg)
+  ![alt text](posts_img/english_dic/confront.jpg)
