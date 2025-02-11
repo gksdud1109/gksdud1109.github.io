@@ -12,7 +12,7 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
-minimal_mistakes_skin: "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+minimal_mistakes_skin: "sunrise" # "default", "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 locale: "ko-KR"
@@ -102,7 +102,7 @@ analytics:
 author:
   name: "정한영"
   avatar: "/restaurant.jpg"
-  bio: "개인 공부 기록용 블로그입니다."
+  bio: "공부 기록용 블로그입니다."
   location: "Korea"
   email:
   links:
@@ -273,7 +273,8 @@ defaults:
     values:
       layout: single
       author_profile: true
-      read_time: true
+      show_date: true
+      date_format: "%B %-d, %Y"
       comments: true
       share: true
       related: true
