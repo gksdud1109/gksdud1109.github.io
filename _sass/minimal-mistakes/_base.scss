@@ -126,6 +126,8 @@ blockquote {
 /* links */
 
 a {
+  text-decoration: none;
+
   &:focus {
     @extend %tab-focus;
   }
@@ -354,23 +356,4 @@ input[type="submit"],
 .archive__item-teaser {
   -webkit-transition: $global-transition;
   transition: $global-transition;
-}
-
-/*제목 등 a태그 하이퍼링크 밑줄 제거*/
-
-a {
-  text-decoration: none;
-
-  &:focus {
-    @extend %tab-focus;
-  }
-
-  &:visited {
-    color: $link-color-visited;
-  }
-
-  &:hover {
-    color: $link-color-hover;
-    outline: 0;
-  }
 }
