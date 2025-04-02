@@ -3,7 +3,8 @@ title: "[JavaBasic]BigDecimal의 사용이유"
 excerpt: "자바기초_BigDecimal의 사용이유_AI의 답변"
 
 categories:
-  - Java, AI
+  - Java
+  - AI
 
 date: 2025-04-02
 last_modified_at: 2025-04-02
