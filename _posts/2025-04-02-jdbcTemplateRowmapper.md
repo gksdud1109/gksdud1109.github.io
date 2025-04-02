@@ -10,9 +10,9 @@ date: 2025-04-02
 last_modified_at: 2025-04-02
 ---
 
-# AI 성능 쩐다...
+# AI 너 진짜 개쩐다...
 
-# **JDBC Template에서 **``** 람다식 이해하기**
+# **JDBC Template에서 람다식 이해하기**
 
 JDBC Template을 사용하여 데이터베이스에서 데이터를 조회할 때, 결과를 객체로 변환하는 역할을 하는 것이 `RowMapper<T>`입니다.
 
@@ -38,20 +38,20 @@ public List<Purchase> findAllPurchases() {
 }
 ```
 
-이 코드는 ``** 테이블의 모든 데이터를 조회**하여 `Purchase` 객체 리스트로 변환하는 역할을 합니다.
+이 코드는 **테이블의 모든 데이터를 조회**하여 `Purchase` 객체 리스트로 변환하는 역할을 합니다.
 
 특히 `RowMapper`를 **람다식**으로 구현한 부분이 핵심입니다.
 
 ---
 
-## **🔹 **``** 람다식 분석**
+## **🔹 람다식 분석**
 
-### **1. **``**란?**
+### **1. RowMapper란?**
 
-- `RowMapper<T>`는 **SQL 조회 결과(ResultSet)의 한 행(row)을 특정 객체(**``**)로 변환하는 인터페이스**입니다.
+- `RowMapper<T>`는 **SQL 조회 결과(ResultSet)의 한 행(row)을 특정 객체로 변환하는 인터페이스**입니다.
 - 주로 데이터베이스 테이블의 각 행을 Java 객체로 매핑할 때 사용됩니다.
 
-### **2. 기존 방식 (**``**)**
+### **2. 기존 방식 (익명 클래스 사용)**
 
 람다식을 사용하기 전에는 `RowMapper`를 익명 클래스로 구현해야 했습니다.
 
@@ -68,13 +68,13 @@ RowMapper<Purchase> purchaseRowMapper = new RowMapper<Purchase>() {
 };
 ```
 
-💡 `RowMapper<T>`의 `mapRow(ResultSet r, int rowNum)` 메서드는 **SQL 결과의 각 행을 **``** 객체로 변환**하는 역할을 합니다.
+💡 `RowMapper<T>`의 `mapRow(ResultSet r, int rowNum)` 메서드는 **SQL 결과의 각 행을 객체로 변환**하는 역할을 합니다.
 
 ---
 
-## **🔹 람다식 **``** 설명**
+## **🔹 람다식 설명**
 
-### **람다식으로 변환된 **``
+### **람다식으로 변환된 RowMapper**
 
 ```java
 RowMapper<Purchase> purchaseRowMapper = (r, i) -> {
@@ -86,26 +86,26 @@ RowMapper<Purchase> purchaseRowMapper = (r, i) -> {
 };
 ```
 
-- `(r, i) -> { ... }`\
+- `(r, i) -> { ... }`
   → **람다식(익명 함수) 문법**
-- `(r, i)`\
+- `(r, i)`
   → `RowMapper`의 `mapRow(ResultSet r, int rowNum)` 메서드의 매개변수
   - `r`: `ResultSet` 객체 (SQL 결과 행)
   - `i`: 현재 처리 중인 행(row)의 번호 (사용하지 않아도 됨)
-- `{ ... }`\
+- `{ ... }`
   → **람다식 본문:** `ResultSet`의 데이터를 읽어 `Purchase` 객체로 변환
 
-💡 **즉, **``** 익명 클래스를 간결하게 람다식으로 표현한 것!**
+💡 **즉, 익명 클래스를 간결하게 람다식으로 표현한 것!**
 
 ---
 
-## **🔹 **``** 동작 방식**
+## **🔹 동작 방식**
 
 ```java
 return jdbc.query(sql, purchaseRowMapper);
 ```
 
-- `jdbc.query(sql, rowMapper)`\
+- `jdbc.query(sql, rowMapper)`
   → `purchase` 테이블의 모든 행을 가져와 `RowMapper`를 통해 `Purchase` 객체 리스트로 변환
 - 실행 과정:
   1. `"SELECT * FROM purchase"` SQL 실행
@@ -129,7 +129,7 @@ return jdbc.query(sql, purchaseRowMapper);
 ## **✅ 람다식이 적용된 이유**
 
 - **코드가 간결해짐**
-- **불필요한 **``** 익명 클래스 제거**
+- **불필요한 익명 클래스 제거**
 - **가독성이 좋아지고 유지보수가 쉬워짐**
 
 ---
