@@ -6,7 +6,7 @@ categories:
   - Spring
 
 date: 2025-03-29
-last_modified_at: 2025-03-29
+last_modified_at: 2025-04-10
 ---
 
 # CHAPTER3: (스프링 컨텍스트: 빈 작성)
