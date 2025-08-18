@@ -84,6 +84,6 @@ class Solution {
 
 [참고한 곳](https://blog.encrypted.gg/941)<br/>
 
-![Image](https://github.com/user-attachments/assets/61822585-e7d6-4e3c-a8d0-08f046394511)
+[![image.webp](https://i.postimg.cc/yxRqzSCG/image.webp)](https://postimg.cc/0K9XYjQG)
 
 [자바 Queue 메소드](https://cocoon1787.tistory.com/774)
