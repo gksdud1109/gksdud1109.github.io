@@ -1,6 +1,6 @@
 ---
-title: "[알고리즘]프로그래머스 DFS/BFS"
-excerpt: "타겟 넘버, 네트워크 두 문제 풀었다"
+title: "[알고리즘] 고득점Kit_BFS/DFS level 1 풀이"
+excerpt: "타겟넘버 / 네트워크 2문제 풀었음"
 
 categories:
   - Algorithm
