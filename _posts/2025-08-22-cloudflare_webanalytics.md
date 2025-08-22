@@ -52,3 +52,7 @@ last_modified_at: 2025-08-22
 
 > ✨할 수 있는 줄 알았는데... <br/>
 > 무료 JS 스니펫 버전은 API를 제공하지 않는다고 한다
+
+<hr>
+
+참고: [Cloudflare Docs](https://developers.cloudflare.com/web-analytics/get-started/)
