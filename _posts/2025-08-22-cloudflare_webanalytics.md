@@ -34,7 +34,6 @@ last_modified_at: 2025-08-22
 
 - 🔽Minimal Mistakes default.html 코드
 
-{% highlight html %}
 {% raw %}
 
 ```html
@@ -44,7 +43,6 @@ last_modified_at: 2025-08-22
 ```
 
 {% endraw %}
-{% endhighlight %}
 
 ## 방문자 수 집계를 하고 싶었지만
 
