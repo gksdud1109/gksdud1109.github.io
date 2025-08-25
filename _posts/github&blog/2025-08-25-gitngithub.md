@@ -1,6 +1,6 @@
 ---
-title: "[꿀팁] 깃허브 블로그 이미지 포스팅"
-excerpt: "이미지 포스트 방법 메모.."
+title: "깃과 깃허브, 브랜치 전략 복습"
+excerpt: "브랜치 전략 메모.."
 
 categories:
   - git
@@ -9,7 +9,7 @@ date: 2025-08-25
 last_modified_at: 2025-08-25
 ---
 
-## 개발자는 혼자 일하지 않는다
+## 개발자는 혼자 일하지 않는다 - git의 등장 이유
 
 그래서 등장한 것이 Version Control System
 
@@ -32,7 +32,5 @@ last_modified_at: 2025-08-25
 
 linux 개발 당시 유행하던 비트키퍼와 비용 이슈
 </br> -> 깃을 만듦
-
-## Git 기본 명령어 -> 생략
 
 ## branch 전략 정리본 업데이트 예정
