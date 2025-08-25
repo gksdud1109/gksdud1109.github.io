@@ -4,8 +4,8 @@ excerpt: "렌더링만 다시 돌리는 방법 메모.."
 
 categories:
   - blog
-  - ggultip
-  - Github
+tags:
+  - [blog, Github]
 
 date: 2025-08-22
 last_modified_at: 2025-08-22

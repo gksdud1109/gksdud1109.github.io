@@ -4,9 +4,8 @@ excerpt: "클라우드 플레어 아날라이틱스 메모.."
 
 categories:
   - blog
-  - ggultip
-  - Github
-  - Web
+tags:
+  - [blog, Github]
 
 date: 2025-08-22
 last_modified_at: 2025-08-22
