@@ -274,7 +274,7 @@ defaults:
       layout: single
       author_profile: true
       show_date: true
-      date_format: "%B %-d, %Y %H:%M"
+      date_format: "%B %-d, %Y"
       comments: true
       share: true
       related: true
