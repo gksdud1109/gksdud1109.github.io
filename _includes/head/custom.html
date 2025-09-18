@@ -16,22 +16,39 @@
 <!-- End Cloudflare Web Analytics -->
 
 <!-- Googole Adsense -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7263667731409736" crossorigin="anonymous"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7263667731409736"
+     crossorigin="anonymous"></script>
 <!-- EndGoogole Adsense -->
 
-<!-- Kakao AdFit mobile-->
-<ins class="kakao_ad_area" style="display:none;"
-data-ad-unit = "DAN-IOweFNh6nxkjDAfQ"
-data-ad-width = "320"
-data-ad-height = "50"></ins>
-<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-<!-- End Kakao AdFit mobile-->
-<!-- Kakao AdFit PC-->
-<ins class="kakao_ad_area" style="display:none;"
-data-ad-unit = "DAN-J1fNTenwXc7NEeO0"
-data-ad-width = "160"
-data-ad-height = "600"></ins>
-<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-<!-- End Kakao AdFit PC-->
+<!-- Kakao AdFit PC/mobile 반응형 -->
+<script>
+  window.addEventListener("DOMContentLoaded", function() {
+    if (window.innerWidth <= 768) {
+      // 모바일 광고만 masthead에 삽입
+      var m = document.getElementById("adfit-container-mobile");
+      if (m) {
+        m.innerHTML =
+          '<ins class="kakao_ad_area" style="display:none;" ' +
+          'data-ad-unit="DAN-IOweFNh6nxkjDAfQ" data-ad-width="320" data-ad-height="50"></ins>';
+      }
+    }
 
+    if (window.innerWidth > 768) {
+      // PC 광고는 사이드바에 삽입
+      var p = document.getElementById("adfit-container-pc");
+      if (p) {
+        p.innerHTML =
+          '<ins class="kakao_ad_area" style="display:none;" ' +
+          'data-ad-unit="DAN-J1fNTenwXc7NEeO0" data-ad-width="160" data-ad-height="600"></ins>';
+      }
+    }
+
+    // 공통 스크립트 로드
+    var s = document.createElement("script");
+    s.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+    s.async = true;
+    document.body.appendChild(s);
+  });
+</script>
+<!-- End Kakao AdFit PC-->
 <!-- end custom head snippets -->
