@@ -6,5 +6,6 @@
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+@import "custom"; // 내가 만든 커스텀
 
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding&display=swap');

@@ -1,0 +1,16 @@
+/* AdFit 광고 노출 제어 */
+.adfit-mobile, .adfit-pc {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .adfit-mobile {
+    display: block !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .adfit-pc {
+    display: block !important;
+  }
+}
