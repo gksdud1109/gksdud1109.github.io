@@ -6,7 +6,7 @@
 @use '../themes/dark';
 
 :root {
-  font-size: 16px;
+  font-size: 12px;
 }
 
 html {
@@ -369,7 +369,9 @@ main {
   box-shadow: none;
   border-color: var(--input-focus-border-color) !important;
   background: center !important;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+  transition:
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
 }
 
 .left {
