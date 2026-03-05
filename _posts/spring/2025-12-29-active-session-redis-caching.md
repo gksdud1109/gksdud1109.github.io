@@ -3,6 +3,7 @@ title: "ActiveSession Redis 캐싱 - 인증 세션 최적화 전략"
 date: 2025-12-29 12:00:00 +0900
 categories: [Spring]
 tags: [spring, redis, session, authentication, caching, performance]
+pin: true
 ---
 
 ## 개요

@@ -3,6 +3,7 @@ title: "CAS(Compare-And-Swap) - Optimistic Lock의 한계와 해결책"
 date: 2026-01-03 12:00:00 +0900
 categories: [Spring]
 tags: [spring, cas, concurrency, optimistic-lock, database]
+pin: true
 ---
 
 ## 개요

@@ -3,6 +3,7 @@ title: "MDC(Mapped Diagnostic Context)로 요청 단위 로그 추적하기"
 date: 2025-12-21 12:00:00 +0900
 categories: [Spring]
 tags: [spring, logging, mdc, logback, tracing]
+pin: true
 ---
 
 ## 개요
