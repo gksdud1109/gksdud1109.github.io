@@ -3,7 +3,6 @@ title: "트랜잭션 커밋 이후에만 WebSocket을 발행하라 — @Transact
 date: 2026-03-05 14:00:00 +0900
 categories: [Spring]
 tags: [spring, event-listener, websocket, transaction, eda, waitfair, transactional]
-pin: true
 ---
 
 > "좌석 예약이 성공했습니다"라는 WebSocket 알림이 날아갔는데, DB에는 실패로 기록되어 있다면?

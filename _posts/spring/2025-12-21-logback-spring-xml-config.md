@@ -3,7 +3,6 @@ title: "logback-spring.xml 설정 - 환경별 로그 구성과 JSON 로깅"
 date: 2025-12-21 13:00:00 +0900
 categories: [Spring]
 tags: [spring, logging, logback, json, mdc, grafana]
-pin: true
 ---
 
 ## 개요
