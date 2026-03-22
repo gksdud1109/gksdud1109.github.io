@@ -1,0 +1,80 @@
+---
+title: "[알고리즘]다익스트라_백준 1238_파티"
+date: 2026-03-22 21:00:00 +0900
+categories: [Algorithm]
+tags: [problem-solving, boj, algorithm]
+---
+[문제 링크](https://www.acmicpc.net/problem/1238)
+
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+
+const int INF = 0x3f3f3f3f;
+int N, M, X;
+
+// 원래 지도 (X -> i, 집에 돌아갈 때 사용)
+vector<pair<int, int>> adj[1002];
+// 간선이 뒤집힌 지도(i -> X, 파티장 갈 때 사용)
+vector<pair<int, int>> rev_adj[1002];
+
+vector<int> dijkstra(int st, const vector<pair<int,int>> graph[]){
+  vector<int> d(N+1, INF);
+  priority_queue<pair<int, int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+
+  d[st] = 0;
+  pq.push({0, st});
+
+  while(!pq.empty()){
+    auto [w, u] = pq.top(); pq.pop();
+    if(d[u] != w) continue;
+
+    for(auto [dw, v] : graph[u]){
+      if(d[u]+dw < d[v]){
+        d[v] = d[u] + dw;
+        pq.push({d[v], v});
+      }
+    }
+  }
+  return d;
+}
+
+int main(){
+  ios::sync_with_stdio(0);
+  cin.tie(0);
+
+  cin >> N >> M >> X;
+
+  while(M--){
+    int u, v, w;
+    cin >> u >> v >> w;
+    adj[u].push_back({w, v}); // 정방향 저장
+    rev_adj[v].push_back({w, u}); // 역방향 저장
+  }
+
+  vector<int> dist_to_home = dijkstra(X, adj);
+  vector<int> dist_to_party = dijkstra(X, rev_adj);
+
+  int ans = 0;
+  for(int i=1; i<=N; i++){
+    if(dist_to_party[i] == INF || dist_to_home[i] == INF) continue;
+    ans = max(ans, dist_to_party[i] + dist_to_home[i]);
+  }
+  cout << ans;
+}
+```
+
+## 핵심 아이디어: 역방향으로 뒤집어 다익스트라를 2번만 실행
+
+원래의 잘 알려진 풀이는 정방향 그래프에서 모든 학생들에 대해 파티장까지 갔다가 돌아오는 경로를 매번 따로따로 구해서 답을 구한다.
+
+하지만 문제에서의 N, 즉 노드가 1000개가 넘어가면 시간 초과가 날 풀이일 뿐더러, 두 번의 연산만으로 끝낼 풀이를 1000번씩 반복하는 것은 비효율적
+
+### step 1. 정방향 그래프에서 X(도착지)를 출발점으로 돌린다.
+- 파티장(X)에서 1번집의 거리, 2번집의 거리 ...
+- 이 모든 거리들이(파티장에서 집으로의) 하나의 vector에 전부 기록
+
+### step 2. 역방향 그래프에서 똑같이 X를 출발점으로 돌린다.
+- 뒤집힌 세계에서 X에서 1번 집으로 가는 최단 경로는, 원래 세계에서 1번 집에서 X로 오는 최단 경로와 동일하다.
+- 모든 학생들이 파티장으로 모이는 길이 또 다른 vector에 한번에 다 기록됨.
+- 1000명의 학생의 집을 출발점으로 잡고 X까지 다익스트라를 돌리는 것보다 훨씬 효율적
