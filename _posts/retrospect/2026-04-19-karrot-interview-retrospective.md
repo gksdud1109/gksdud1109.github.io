@@ -11,7 +11,7 @@ tags: [interview, retrospective]
 
 ## 서류 합격
 
-[![seukeulinsyas-2026-04-19-22-50-22.png](https://i.postimg.cc/kGgN2654/seukeulinsyas-2026-04-19-22-50-22.png)](https://postimg.cc/qhW6Y7yV)
+[![image.png](https://i.postimg.cc/dVhY84fC/image.png)](https://postimg.cc/xXVhQynj)
 
 
 당근 ML Data Platform팀의 백엔드 인턴 포지션에 지원했다!
@@ -30,7 +30,7 @@ JD에 p99.9 30ms 같은 수치가 명시되어 있어서 ML 피처 스토어의 
 
 내 이력서에 적힌 기술 스택이나 단순 구현 여부를 묻지 않았다. 왜 그 기술을 선택했는지, 다른 대안은 없었는지, 깊이 파고드는 질문들을 받았다.
 
-전반적으로 자신 있었던 부분이라 납득가능한 답변을 드릴 수 있었다.
+전반적으로 자신 있었던 부분이라 납득가능한 답변을 드릴 수 있었다고 생각한다.
 
 하지만 생각지 못한 기술적 대안이나, 내가 이력서/포트폴리오에 적었지만 상대적으로 깊이 고민하지 않았던 문제는 여지없이 허를 찔렸다.
 
