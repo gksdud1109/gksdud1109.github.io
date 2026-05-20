@@ -5,15 +5,15 @@ categories: [Database]
 tags: [database, oracle, sql, execution-plan, optimizer]
 ---
 
-> 발급성 OLTP 테이블(예시 `INVITE_ISSUE`)의 쿼리로 실행계획을 떠보고 읽는다. 모든 테이블/인덱스/식별자는 일반화된 예시 값. 인덱스 물리 구조·PGA·OLTP 는 별도 글 「Oracle 인덱스 구조 원리」 참고.
+> 샘플 OLTP 테이블(예시 `SAMPLE_TXN`)의 쿼리로 실행계획을 떠보고 읽는다. 모든 테이블/인덱스/식별자는 학습용 예시 값이다. 인덱스 물리 구조·PGA·OLTP 는 별도 글 「Oracle 인덱스 구조 원리」 참고.
 
 ---
 
-## 0. 왜 실행계획을 봐야 하나
+## 0. 실행계획이 필요한 이유
 
-SQL 은 **선언적 언어**다. "무엇을 원하는지" 만 쓰고 "어떻게 가져올지" 는 안 쓴다. 그 "어떻게" 를 DB의 **옵티마이저(Optimizer)** 가 정한다.
+SQL 은 **선언적 언어**다. 원하는 결과를 선언하고, 데이터를 가져오는 구체적인 경로는 DB의 **옵티마이저(Optimizer)** 가 정한다.
 
-문제는 — 내가 인덱스를 만들 때 머릿속에 그린 "이 쿼리는 이 인덱스를 탈 것이다" 라는 가정이, 옵티마이저의 실제 판단과 다를 수 있다는 것. 그 차이를 눈으로 확인하는 도구가 **실행계획(Execution Plan)** 이다.
+인덱스를 만들 때 예상한 접근 경로와 옵티마이저의 실제 판단은 다를 수 있다. 그 차이를 눈으로 확인하는 도구가 **실행계획(Execution Plan)** 이다.
 
 > ⚠️ 용어가 처음이면 먼저 **마지막 11장 「초심자 키워드 사전」** 부터 읽고 와도 좋다. (parse / cursor / bind / cardinality 등)
 
@@ -31,15 +31,15 @@ SQL 은 **선언적 언어**다. "무엇을 원하는지" 만 쓰고 "어떻게 
 | I/O 방식 | multi-block read | single-block 기본 (FAST FULL 은 multi-block) |
 
 ```sql
-SELECT COUNT(*) FROM INVITE_ISSUE WHERE WORKSPACE_ID = ?;
+SELECT COUNT(*) FROM SAMPLE_TXN WHERE TENANT_ID = ?;
 ```
 
-- `IDX_INVITE_WS(WORKSPACE_ID)` 있으면 → **INDEX RANGE SCAN** (해당 영역 leaf 만 훑음)
-- 인덱스 없으면 → **TABLE FULL SCAN** (100만 row 전부 읽어 비교)
+- `IDX_SAMPLE_TENANT(TENANT_ID)` 있으면 → **INDEX RANGE SCAN** (해당 영역 leaf 만 훑음)
+- 인덱스 없으면 → **TABLE FULL SCAN** (대상 테이블 row를 전부 읽어 비교)
 
 테이블 row 가 200 byte, 인덱스 entry 가 20 byte 면 **읽을 블록 수가 약 10배 차이**. → 필요한 컬럼이 인덱스에 다 있으면(index-only) 빠른 이유.
 
-> **INDEX FAST FULL SCAN**: 인덱스 정렬 순서 무시, multi-block read 로 인덱스 전체를 쓸어담음. `COUNT(*)` 처럼 순서 불필요할 때 옵티마이저가 고르는 풀카운트 최속 경로.
+> **INDEX FAST FULL SCAN**: 인덱스 정렬 순서를 사용하지 않고 multi-block read 로 인덱스 전체를 읽는다. `COUNT(*)`처럼 순서가 필요 없는 경우 후보가 될 수 있다.
 
 ---
 
@@ -47,38 +47,38 @@ SELECT COUNT(*) FROM INVITE_ISSUE WHERE WORKSPACE_ID = ?;
 
 | | 어디 저장 | 영구? | 조회 |
 |---|---|---|---|
-| **EXPLAIN PLAN 결과** (예측) | `PLAN_TABLE` 이라는 **실제 테이블** | 임시(다음 EXPLAIN이 덮음) | `DBMS_XPLAN.DISPLAY()` |
+| **EXPLAIN PLAN 결과** (예측) | `PLAN_TABLE` 이라는 **실제 테이블** | 직접 정리하기 전까지 남을 수 있음 | `DBMS_XPLAN.DISPLAY()` |
 | **실제 실행된 plan** | **SGA → Shared Pool → Library Cache (메모리)** | 캐시에서 밀리면 사라짐 | `V$SQL_PLAN` 동적 뷰 |
 
 ```sql
 EXPLAIN PLAN FOR
-SELECT COUNT(*) FROM INVITE_ISSUE WHERE WORKSPACE_ID = 'WS_1001';
+SELECT COUNT(*) FROM SAMPLE_TXN WHERE TENANT_ID = 'TENANT_A';
 -- 위 한 줄이 PLAN_TABLE 에 id 0,1,2... row 로 INSERT 됨
 
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY());
 -- PLAN_TABLE 을 읽어 표로 포맷
 ```
 
-→ EXPLAIN 순간 `PLAN_TABLE` 에 row 로 저장(임시). 영구 보관하려면 SQL Plan Baseline 같은 별도 기능 필요.
+→ EXPLAIN 순간 `PLAN_TABLE` 에 row 로 저장된다. `DBMS_XPLAN.DISPLAY()`는 보통 최근 또는 지정한 statement_id의 계획을 읽어 보여주며, 필요하면 `PLAN_TABLE` 데이터를 직접 정리한다.
 
-> **Library Cache 는 SGA(공유 메모리) 안에 있다.** 그래서 한 세션이 만든 실행계획을 다른 세션이 재사용한다. (SGA/PGA 구분은 「Oracle 인덱스 구조 원리」 6장 참고 — 정렬용 PGA 와 헷갈리지 말 것.)
+> **Library Cache 는 SGA(공유 메모리) 안에 있다.** 동일 SQL 텍스트, 스키마/권한/세션 환경 등 재사용 조건이 맞으면 여러 세션이 캐시된 커서를 재사용할 수 있다. (SGA/PGA 구분은 「Oracle 인덱스 구조 원리」 6장 참고 — 정렬용 PGA 와 헷갈리지 말 것.)
 
 ---
 
 ## 3. 옵티마이저는 무엇을 보고 plan 을 정하나 — 통계 기반(CBO)
 
-오해 1순위: "쿼리를 많이 돌리면 옵티마이저가 학습해서 더 좋은 plan 으로 갱신한다" → **아니다.**
+쿼리를 많이 실행한다는 사실만으로 옵티마이저가 학습해서 더 좋은 plan 으로 바꾸는 것은 아니다.
 
 Oracle 옵티마이저는 **CBO(Cost-Based Optimizer)**. 데이터를 매번 직접 보는 게 아니라 **데이터의 요약 통계** 로 비용을 계산한다.
 
 ```text
-DBMS_STATS.GATHER_TABLE_STATS   (야간 자동배치 or 수동)
+DBMS_STATS.GATHER_TABLE_STATS   (자동 통계 수집 or 수동)
    ↓
 통계 저장: 테이블 row 수, 블록 수, 컬럼별 distinct 수,
           데이터 분포(히스토그램), 인덱스 높이 등
    ↓
 SQL 첫 실행 = hard parse
-   → 옵티마이저가 "통계" 로 비용 계산 → plan 결정
+   → 옵티마이저가 통계로 비용 계산 → plan 결정
    → Library Cache 에 cursor 캐싱
    ↓
 같은 SQL 재실행 = soft parse (캐시된 plan 재사용, 재계산 X)
@@ -91,9 +91,9 @@ SQL 첫 실행 = hard parse
 | 통계 갱신 | `DBMS_STATS` 로 통계 새로 수집 → 다음 parse 때 재계산 |
 | 캐시 축출 | Library Cache 메모리 부족으로 cursor 가 밀려남 |
 | DDL 변경 | 인덱스 추가/삭제, 컬럼 변경 → 관련 cursor 무효화 |
-| bind 값 차이 | (12c+) adaptive — 처음 본 값에 plan 맞췄다가 패턴 다르면 재적응 |
+| bind 값 차이 | bind peeking / adaptive cursor sharing 등으로 값 분포에 따라 다른 plan 후보 가능 |
 
-> **운영에서 멀쩡하던 쿼리가 갑자기 느려졌다 → 1순위 의심은 "통계가 낡았다".** `DBMS_STATS.GATHER_TABLE_STATS` 로 갱신하면 현재 데이터 규모에 맞는 plan 을 다시 만든다.
+> 운영에서 멀쩡하던 쿼리가 갑자기 느려졌다면 통계 노후화, plan 변경, 바인드 값 분포 변화, DDL 변경 등을 함께 의심한다. `DBMS_STATS.GATHER_TABLE_STATS` 는 현재 데이터 분포를 반영하도록 통계를 갱신하는 대표적인 방법이다.
 
 ---
 
@@ -106,14 +106,14 @@ SQL 첫 실행 = hard parse
 | `INDEX UNIQUE SCAN` | 딱 **1건** 보장하고 찾음 | PK/UK 등치. 가장 빠름 |
 | `INDEX RANGE SCAN` | 정렬 인덱스에서 **여러 건/범위** | `=`(중복가능), `BETWEEN`, `>`, `LIKE 'A%'` |
 | `INDEX FULL SCAN` | 인덱스 전체를 **순서대로**(single block) | ORDER BY 를 인덱스로 대체 |
-| `INDEX FAST FULL SCAN` | 인덱스 전체를 **순서무시 multi-block** | `COUNT(*)` 등 순서 불필요. 풀카운트 최속 |
+| `INDEX FAST FULL SCAN` | 인덱스 전체를 **순서무시 multi-block** | `COUNT(*)` 등 순서 불필요. 전체 카운트 후보 |
 | `INDEX SKIP SCAN` | 복합 인덱스 **선두 컬럼 건너뛰고** 탐색 | 선두 조건 빠졌을 때. 선두 distinct 적을 때만 이득 |
 
 ### 테이블 접근
 
 | Operation | 의미 |
 |---|---|
-| `TABLE ACCESS FULL` | 풀스캔 (작은 테이블 OK, 큰 테이블 위험 신호) |
+| `TABLE ACCESS FULL` | 테이블 전체 스캔. 결과 비율이 높거나 분석/배치 쿼리라면 정상 선택일 수 있음 |
 | `TABLE ACCESS BY INDEX ROWID` | 인덱스로 ROWID 찾은 뒤 테이블 본체 접근 |
 
 ### 조인
@@ -139,7 +139,7 @@ SQL 첫 실행 = hard parse
 
 ```sql
 EXPLAIN PLAN FOR
-SELECT COUNT(*) FROM INVITE_ISSUE WHERE WORKSPACE_ID = 'WS_1001';
+SELECT COUNT(*) FROM SAMPLE_TXN WHERE TENANT_ID = 'TENANT_A';
 
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY());
 ```
@@ -147,19 +147,19 @@ SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY());
 출력:
 
 ```text
-Plan hash value: 1613623564
+Plan hash value: 1234567890
 
 -----------------------------------------------------------------------------------
 | Id  | Operation         | Name                | Rows | Bytes | Cost (%CPU)| Time     |
 -----------------------------------------------------------------------------------
 |   0 | SELECT STATEMENT  |                     |    1 |    16 |     1   (0)| 00:00:01 |
 |   1 |  SORT AGGREGATE   |                     |    1 |    16 |            |          |
-|*  2 |   INDEX RANGE SCAN| IDX_INVITE_WS       |    5 |    80 |     1   (0)| 00:00:01 |
+|*  2 |   INDEX RANGE SCAN| IDX_SAMPLE_TENANT   |    5 |    80 |     1   (0)| 00:00:01 |
 -----------------------------------------------------------------------------------
 
 Predicate Information (identified by operation id):
 ---------------------------------------------------
-   2 - access("WORKSPACE_ID"='WS_1001')
+   2 - access("TENANT_ID"='TENANT_A')
 ```
 
 ### 컬럼 의미
@@ -173,22 +173,22 @@ Predicate Information (identified by operation id):
 | **Cost** | 옵티마이저가 매긴 비용 점수 (낮을수록 좋음) | 절대값보다 **대안과 비교용** |
 | **Time** | 예상 소요시간 (추정치) | 실측 아님 |
 
-**Bytes 를 왜 세나?** 데이터 크기가 비용을 좌우한다. 정렬(SORT)/해시조인 시 "PGA work area 에 다 들어가나, temp 로 spill 나나" 를 byte 로 판단한다. 작은 컬럼만 읽으면 bytes 작아 비용 낮음 → `SELECT *` 보다 필요 컬럼만 select 가 plan 상 유리.
+**Bytes 컬럼의 의미**: 데이터 크기는 정렬(SORT), 해시조인, temp spill 비용에 영향을 준다. 작은 컬럼만 읽으면 예상 bytes가 작아져 `SELECT *`보다 필요한 컬럼만 조회하는 쿼리가 유리할 수 있다.
 
 ### Predicate Information — `access` vs `filter` (가장 중요)
 
 ```text
-2 - access("WORKSPACE_ID"='WS_1001')
+2 - access("TENANT_ID"='TENANT_A')
 ```
 
-"operation **id 2** 에서 어떤 조건을 어떻게 썼는가".
+operation **id 2** 에서 어떤 조건을 어떻게 적용했는지를 보여준다.
 
 | | 의미 | 효율 |
 |---|---|---|
-| **access** | 인덱스 **탐색 자체** 에 조건 사용 → 처음부터 해당 범위만 읽음 | ✅ 좋음 |
-| **filter** | 일단 읽어온 뒤 **메모리에서 버림** | ⚠️ 나쁨 (불필요 read) |
+| **access** | 인덱스 **탐색 자체** 에 조건 사용 → 처음부터 해당 범위만 읽음 | 대체로 유리 |
+| **filter** | 읽은 row에 조건을 추가 적용 | 읽은 양과 선택도 확인 필요 |
 
-위는 `access` → 그 값 영역만 콕 집어 읽음. **이상적.** 같은 조건이 `filter` 였다면 다 읽고 걸렀다는 뜻이라 비효율.
+위는 `access`로 잡혔으므로 해당 값 영역을 탐색 조건으로 사용한다. `filter`로 보인다고 항상 나쁜 것은 아니지만, 읽은 row 수가 크면 비효율 신호가 될 수 있다.
 
 ### 읽는 순서
 
@@ -196,11 +196,11 @@ Predicate Information (identified by operation id):
 
 | Id | 해석 |
 |---|---|
-| **2** | `IDX_INVITE_WS` RANGE SCAN. 조건을 **access** 로 사용 → 약 5건, 80 byte. **TABLE ACCESS 없음** = index-only |
+| **2** | `IDX_SAMPLE_TENANT` RANGE SCAN. 조건을 **access** 로 사용 → 약 5건, 80 byte. **TABLE ACCESS 없음** = index-only |
 | **1** | 그 5건을 `SORT AGGREGATE` 집계 → `COUNT(*)` 1행 |
 | **0** | 최종 SELECT 1행 반환 |
 
-`Plan hash value` = 이 plan 구조의 **지문**. 같은 SQL 재측정 시 값이 바뀌면 옵티마이저가 다른 plan 을 골랐다는 신호 → 통계 변화 의심.
+`Plan hash value` = 이 plan 구조의 **지문**. 같은 SQL 재측정 시 값이 바뀌면 옵티마이저가 다른 plan 을 골랐다는 신호다. 통계 변화, 바인드 값 분포, 파라미터, 힌트, DDL, 세션 환경 등을 함께 확인한다.
 
 ---
 
@@ -210,12 +210,12 @@ Predicate Information (identified by operation id):
 
 - 인덱스 키워드(`INDEX UNIQUE/RANGE/FAST FULL SCAN`) 보임
 - 의도한 인덱스 이름 보임
-- 큰 테이블에 `TABLE ACCESS FULL` 없음
+- 큰 OLTP 단건 조회 쿼리에서 불필요한 `TABLE ACCESS FULL` 없음
 - WHERE 가 `access:` 에 잡힘 (`filter:` 아님)
 
 **나쁜 신호**
 
-- 큰 테이블에 `TABLE ACCESS FULL`
+- 단건/소수건 조회가 목적인데 큰 테이블에 `TABLE ACCESS FULL`
 - 인덱스 탔는데 `TABLE ACCESS BY INDEX ROWID` 과다 (필요 컬럼이 인덱스에 없어 row마다 테이블 왕복)
 - 조건이 `filter:` 로 빠짐
 - 예측 `Rows` 와 실측이 크게 어긋남 (통계 부정확 → 잘못된 조인/접근 선택)
@@ -260,10 +260,10 @@ SET AUTOTRACE ON;
 
 | 질문 | 답 |
 |---|---|
-| 풀스캔 vs 인덱스스캔 | 같은 "전부 읽기"여도 대상이 **테이블 블록 vs 인덱스 leaf** — 후자가 훨씬 작음 |
-| 실행계획 저장 | EXPLAIN → `PLAN_TABLE`(임시 테이블), 실제 실행 → SGA Library Cache(메모리) |
+| 풀스캔 vs 인덱스스캔 | 같은 전체 읽기여도 대상이 **테이블 블록 vs 인덱스 leaf** — 후자가 더 작을 수 있음 |
+| 실행계획 저장 | EXPLAIN → `PLAN_TABLE`, 실제 실행 cursor → SGA Library Cache(메모리) |
 | 옵티마이저 판단 기준 | 쿼리 빈도 ❌ / **통계(CBO)** ✅, parse 시점 결정, 통계·DDL 변경 시 재계산 |
-| access vs filter | access=인덱스 탐색에 사용(좋음), filter=읽고 버림(나쁨) |
+| access vs filter | access=인덱스 탐색에 사용, filter=읽은 row에 추가 조건 적용. 효율은 읽은 양과 선택도로 판단 |
 | Rows / Bytes | Rows=추정 반환 건수, Bytes=그 크기(정렬/조인 메모리 비용 계산용) |
 | 읽는 순서 | 들여쓰기 깊고 위 → 바깥 |
 
@@ -274,7 +274,7 @@ SET AUTOTRACE ON;
 1. **Clustering Factor** — 인덱스 키 순서와 테이블 row 물리 순서 유사도. 나쁘면 RANGE SCAN 후 TABLE ACCESS 비용 폭증.
 2. **복합 인덱스 컬럼 순서** — `(A,B,C)` 는 선두(A) 조건 없으면 잘 안 탐(또는 비싼 SKIP SCAN).
 3. **Cardinality 추정 오류** — `DISPLAY_CURSOR('ALLSTATS LAST')` 의 E-Rows vs A-Rows. 느린 쿼리의 가장 흔한 근본 원인.
-4. **Bind Variable Peeking & Adaptive Plan** — `?` 자리 값에 따라 plan 이 달라지는 함정.
+4. **Bind Peeking & Adaptive Cursor Sharing** — `?` 자리 값의 분포에 따라 plan 후보가 달라질 수 있는 지점.
 5. **`/*+ INDEX(t idx) */` 힌트** — 옵티마이저 결정 강제. 최후의 수단. 남발 시 통계 변화에 코드가 못 따라가 더 큰 사고.
 
 ---
@@ -289,14 +289,14 @@ SQL 한 문장이 실행되기 전 Oracle 이 거치는 준비 단계.
 
 | | 무슨 일 | 비용 |
 |---|---|---|
-| **Hard parse** | 문법검사 → 권한검사 → **옵티마이저가 통계 보고 실행계획 생성** → Library Cache 에 적재 | 비쌈 (CPU·메모리, 옵티마이저 연산) |
-| **Soft parse** | 같은 SQL 이 Library Cache 에 이미 있음 → **계획 재사용**, 생성 단계 건너뜀 | 쌈 |
+| **Hard parse** | 문법검사 → 권한검사 → **옵티마이저가 통계 보고 실행계획 생성** → Library Cache 에 적재 | 비용 높음 (CPU·메모리, 옵티마이저 연산) |
+| **Soft parse** | 같은 SQL 이 Library Cache 에 이미 있음 → **계획 재사용**, 생성 단계 건너뜀 | 비용 낮음 |
 
-→ SQL 문자열이 매번 달라지면(값을 문자열로 박은 SQL) hard parse 폭증 → CPU 낭비. **바인드 변수**를 쓰면 SQL 문자열이 동일해져 soft parse 로 재사용된다.
+→ SQL 문자열이 매번 달라지면(값을 문자열로 박은 SQL) hard parse가 늘어 CPU를 낭비한다. **바인드 변수**를 쓰면 SQL 문자열이 동일해져 soft parse 재사용 가능성이 높아진다.
 
 ### Cursor (커서)
 
-"하나의 SQL + 그 실행계획 + 실행 상태" 를 담는 **메모리 핸들**. Library Cache 에 캐싱되는 단위가 cursor. "cursor 가 캐시에서 밀려났다" = 그 SQL 의 계획이 메모리에서 빠져 다음에 hard parse 해야 함.
+하나의 SQL, 실행계획, 실행 상태를 담는 **메모리 핸들**. Library Cache 에 캐싱되는 단위가 cursor. cursor 가 캐시에서 밀려나면 다음 실행 때 hard parse가 필요할 수 있다.
 
 ### Bind variable (바인드 변수)
 
@@ -304,28 +304,28 @@ SQL 의 값 자리를 `?`(JDBC) / `:1`(Oracle) 같은 **자리표시자**로 두
 
 ```sql
 -- 바인드 X : 값마다 다른 SQL 문자열 → 매번 hard parse
-SELECT * FROM INVITE_ISSUE WHERE WORKSPACE_ID = 'WS_1001';
-SELECT * FROM INVITE_ISSUE WHERE WORKSPACE_ID = 'WS_1002';
+SELECT * FROM SAMPLE_TXN WHERE TENANT_ID = 'TENANT_A';
+SELECT * FROM SAMPLE_TXN WHERE TENANT_ID = 'TENANT_B';
 
 -- 바인드 O : 문자열 동일 → soft parse 재사용
-SELECT * FROM INVITE_ISSUE WHERE WORKSPACE_ID = :1;
+SELECT * FROM SAMPLE_TXN WHERE TENANT_ID = :1;
 ```
 
 MyBatis `#{param}`, JDBC `PreparedStatement` 가 이걸 해 준다. → 보안(SQL Injection 방지) + 성능(parse 재사용) 둘 다 이득.
 
 ### Predicate (술어)
 
-WHERE/JOIN 의 **조건식**을 부르는 말. `WORKSPACE_ID = 'WS_1001'` 같은 것. 실행계획의 "Predicate Information" = "각 조건을 어디서 어떻게 적용했나(access/filter)".
+WHERE/JOIN 의 **조건식**을 부르는 말. `TENANT_ID = 'TENANT_A'` 같은 것. 실행계획의 Predicate Information은 각 조건을 어디서 어떻게 적용했는지(access/filter)를 보여준다.
 
 ### Cardinality (카디널리티)
 
-"어떤 단계가 반환할 **row 수**" 의 추정치. 실행계획의 `Rows` 컬럼이 이것. 옵티마이저는 이 추정으로 조인 방식·인덱스 사용 여부를 결정 → **추정이 빗나가면 plan 이 통째로 틀어진다**(느린 쿼리 1순위 원인).
+어떤 단계가 반환할 **row 수**의 추정치. 실행계획의 `Rows` 컬럼이 이것. 옵티마이저는 이 추정으로 조인 방식·인덱스 사용 여부를 결정한다. 추정이 크게 빗나가면 plan 이 틀어질 수 있다.
 
 ### Selectivity (선택도)
 
-"조건이 전체 중 몇 비율을 남기나" (0~1).
+조건이 전체 중 몇 비율을 남기는지 나타내는 값(0~1).
 
-- 선택도 낮음(=결과 적음) → 인덱스 유리 (예: `INVITE_CODE = ?` 는 1건, 선택도 매우 낮음)
+- 선택도 낮음(=결과 적음) → 인덱스 유리 (예: 고유 업무 키 조건은 보통 선택도가 매우 낮음)
 - 선택도 높음(=결과 많음) → 풀스캔이 나을 수도 (예: `STATUS = 0` 이 전체의 90%)
 
 옵티마이저는 통계로 selectivity 를 추정해 cardinality 를 계산한다.
@@ -334,7 +334,7 @@ WHERE/JOIN 의 **조건식**을 부르는 말. `WORKSPACE_ID = 'WS_1001'` 같은
 
 컬럼 값 **분포** 통계. 값이 고르게 퍼졌는지, 특정 값에 쏠렸는지를 기록.
 
-- 히스토그램 없으면 옵티마이저는 "값이 균등 분포" 라고 가정 → 쏠린 데이터에서 오판.
+- 히스토그램 없으면 옵티마이저는 값이 균등 분포한다고 가정할 수 있어 쏠린 데이터에서 오판할 수 있다.
 - 예: `STATUS` 가 99% 가 0, 1% 가 1 → 히스토그램 있어야 `STATUS=1` 조건에 인덱스를 옳게 선택.
 
 ### CBO vs RBO
@@ -344,7 +344,7 @@ WHERE/JOIN 의 **조건식**을 부르는 말. `WORKSPACE_ID = 'WS_1001'` 같은
 | **RBO** (Rule-Based, 구식·폐기) | 정해진 규칙 우선순위 (예: 인덱스 있으면 무조건 인덱스) |
 | **CBO** (Cost-Based, 현재 표준) | **통계 기반 비용 계산** 후 최저 비용 plan 선택 |
 
-지금 Oracle 은 전부 CBO. 그래서 "통계가 정확해야 좋은 plan 이 나온다" 가 핵심 명제.
+현재 Oracle 옵티마이저의 중심은 CBO다. 그래서 통계 품질이 좋은 plan의 핵심 전제다.
 
 ### Cost (비용)
 

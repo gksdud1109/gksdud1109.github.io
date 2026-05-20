@@ -5,7 +5,7 @@ categories: [Kotlin]
 tags: [programming, kotlin]
 ---
 
-> [Kotlin 패턴#1]·[#2]에서 만든 초대 코드 발급 API의 서비스 레이어를 직접 작성해보며 막혔던 8가지를 정리했다. 가시성 제어자, `SecureRandom`, `firstOrNull`/`it`, `?:` vs `?.`, `?.let`, `repeat`, 재시도 패턴, 동기 fire-and-forget까지 코틀린 ↔ 자바 대비로 풀었다. 예제 코드는 학습용으로 직접 구성했다.
+> [Kotlin 패턴#1]·[#2]에서 만든 초대 코드 발급 API의 서비스 레이어를 직접 작성해보며 확인한 8가지를 정리했다. 가시성 제어자, `SecureRandom`, `firstOrNull`/`it`, `?:` vs `?.`, `?.let`, `repeat`, 재시도 패턴, 동기 fire-and-forget까지 코틀린 ↔ 자바 대비로 풀었다. 예제 코드는 학습용으로 직접 구성했다.
 
 ---
 
@@ -21,10 +21,10 @@ class InviteService(
     private val notificationService: NotificationService,
 ) {
     companion object {
-        internal const val CONFIG_KEY = "INVITE"
-        internal const val CONFIG_TYPE = "WORKSPACE_INVITE"
+        internal const val SAMPLE_CONFIG_KEY = "SAMPLE_INVITE"
+        internal const val SAMPLE_POLICY_TYPE = "SAMPLE_POLICY"
         private const val MAX_CODE_RETRY = 3
-        private const val NOTIFY_PROXIMITY = 10_000
+        private const val NOTIFY_PROXIMITY = 10_000 // 예시 임계값
     }
 
     private val random = SecureRandom()
@@ -32,7 +32,7 @@ class InviteService(
     fun create(request: InviteRequest.Create): InviteResponse.Create {
         debugLog("Create request: wsId=${request.workspaceId}, reqId=${request.requestId}")
 
-        val config = configService.getConfig(CONFIG_KEY, CONFIG_TYPE)
+        val config = configService.getConfig(SAMPLE_CONFIG_KEY, SAMPLE_POLICY_TYPE)
         config.validateActivePeriod()   // 운영 기간 검증
 
         val workspace = config.workspaces.firstOrNull { it.workspaceId == request.workspaceId }
@@ -151,16 +151,16 @@ class InviteService(
 }
 ```
 
-## Q. 자바 시선으로 보면 막히는 8가지
+## 자바 시선에서 확인할 8가지
 
-1. `internal const val` / `private const val` 두 가지의 차이?
-2. `SecureRandom`과 그냥 `Random`의 차이? `private val`로 빼면 공통으로 쓰이는 원리?
-3. `firstOrNull { it.workspaceId == ... }` — `firstOrNull`이 뭔지, `it`은 어떻게 지정되는지?
-4. 바로 아래 `?:`로 예외를 던지는데 `?.`와 문법적으로 뭐가 다른지?
-5. `?.let { existing -> ... }` 패턴의 정확한 동작 분해
-6. `repeat`의 의미, stdlib에서 동작 보는 법, `attempt`가 뭔지 어떻게 아는지?
-7. `insertWithRetry()`가 여러 번 시도하는 의미와 이유?
-8. `notifyLowStockIfNeeded()`가 동기로 알림 서비스를 호출하는데, afterCommit으로 안 뺀 이유?
+1. `internal const val` / `private const val` 두 가지의 차이
+2. `SecureRandom`과 `Random`의 차이, `private val`로 재사용하는 이유
+3. `firstOrNull { it.workspaceId == ... }`에서 `firstOrNull`과 `it`의 의미
+4. `?:`와 `?.`의 문법 차이
+5. `?.let { existing -> ... }` 패턴의 동작 분해
+6. `repeat`의 의미, stdlib 시그니처를 확인하는 방법
+7. `insertWithRetry()`가 여러 번 시도하는 이유
+8. `notifyLowStockIfNeeded()`를 동기 fire-and-forget으로 둔 이유
 
 ---
 
@@ -170,8 +170,8 @@ class InviteService(
 
 ```kotlin
 companion object {
-    internal const val CONFIG_KEY = "INVITE"      // 모듈 전체에서 보임
-    internal const val CONFIG_TYPE = "WORKSPACE_INVITE"
+    internal const val SAMPLE_CONFIG_KEY = "SAMPLE_INVITE"      // 모듈 전체에서 보임
+    internal const val SAMPLE_POLICY_TYPE = "SAMPLE_POLICY"
     private const val MAX_CODE_RETRY = 3          // 이 클래스 안에서만
 }
 ```
@@ -181,12 +181,12 @@ companion object {
 | `private` | 선언된 클래스 내부만 | `private` |
 | `internal` | **같은 모듈**(같은 Gradle 모듈) 전체 | 자바엔 정확한 대응 없음 (≈ public-within-module) |
 
-👉 무엇이 가시성을 결정하나 — **실사용처**:
+가시성을 결정하는 기준은 **실사용처**다.
 
-- `CONFIG_KEY`/`CONFIG_TYPE` → 다른 서비스(예: `InviteUsageService`)가 `InviteService.CONFIG_KEY`로 사용중.. **다른 클래스에서 참조**(같은 모듈)하므로 `private`면 안 되고 `internal`.
+- `SAMPLE_CONFIG_KEY`/`SAMPLE_POLICY_TYPE` → 같은 모듈의 다른 클래스에서 참조하는 샘플 상수이므로 `internal`.
 - `MAX_CODE_RETRY` → `insertWithRetry()` 안에서만 → `private`로 최소 노출.
 
-> 최소 가시성 원칙 — "필요한 만큼만 연다". `internal`이면 "모듈을 분리하면 이 참조가 모듈 경계를 넘는다"는 사실이 가시성으로 드러난다.
+> 최소 가시성 원칙 — 필요한 만큼만 연다. `internal`이면 모듈을 분리할 때 이 참조가 모듈 경계를 넘는다는 사실이 가시성으로 드러난다.
 
 ## 2. `SecureRandom` vs `Random`, `private val`로 빼면 공유되는 원리
 
@@ -207,13 +207,11 @@ companion object {
 
 매번 `SecureRandom()` 새로 안 만들고 필드로 빼는 이유:
 
-- `SecureRandom()` 생성은 **엔트로피 수집이라 비쌈**. 호출마다 new 하면 느리다.
+- `SecureRandom()` 생성은 **엔트로피 수집 비용이 있다**. 호출마다 new 하면 불필요한 비용이 생긴다.
 - 한 번 만들어 재사용하면 내부 엔트로피 풀을 이어 써서 효율적 + 안전.
 - `SecureRandom`은 **thread-safe**(내부 동기화)라 싱글톤으로 여러 스레드가 동시에 `nextInt()`를 호출해도 안전.
 
-👉 [Kotlin 패턴#2]의 "companion엔 불변만, 가변 공유 상태 위험" 논리의 **합법적 예외**다 — `SecureRandom`은 스스로 thread-safe라 싱글톤 공유 가능. (그래도 companion이 아닌 인스턴스 필드로 둔 건 소속을 명확히 하기 위함.)
-
-👉 라이브러리 자체의 원리와 기능은 추후에 더 뜯어보며 공부해보자...
+[Kotlin 패턴#2]의 companion 가변 상태 경고와 달리, `SecureRandom`은 스스로 thread-safe라 싱글톤 빈에서 공유할 수 있다. 그래도 companion이 아닌 인스턴스 필드로 둔 건 서비스의 구현 세부사항이라는 소속을 명확히 하기 위해서다.
 
 ## 3. `firstOrNull { }` 와 `it`
 
@@ -269,9 +267,9 @@ firstOrNull {...} ?: throw ...
 // null 아님 (찾음)               → 그 Workspace 값을 workspace 에 할당
 ```
 
-`throw`는 표현식이라 `?:` 오른쪽에 올 수 있다. "찾으면 값, 못 찾으면 예외"를 한 줄로. 자바로 풀면 `...findFirst().orElseThrow(() -> new ...)` (≈ `?: throw`).
+`throw`는 표현식이라 `?:` 오른쪽에 올 수 있다. 찾으면 값을 쓰고, 못 찾으면 예외를 던지는 흐름을 한 줄로 표현한다. 자바로 풀면 `...findFirst().orElseThrow(() -> new ...)` (≈ `?: throw`)에 가깝다.
 
-> 헷갈리면: `?.`는 **"있으면 사용"**, `?:`는 **"없으면 대체"**. 자주 같이 쓰인다: `a?.b ?: c` = "a가 있으면 a.b, 그 결과가 null이면 c".
+> 구분법: `?.`는 **있으면 사용**, `?:`는 **없으면 대체**. 자주 같이 쓰인다: `a?.b ?: c` = `a`가 있으면 `a.b`, 그 결과가 null이면 `c`.
 
 ## 5. `?.let { existing -> ... }` 분해
 
@@ -296,9 +294,9 @@ repository.findByIdempotencyKey(...)
  -> 있음        → let 진입, existing 으로 기존 코드 응답 후 return (메서드 종료)
 ```
 
-`existing`은 `it`을 명시적으로 이름 지은 것(3번과 같은 규칙). 자바로는 `if (existing != null) { ... }`. 즉 `?.let { }` = **"null 아닐 때만 이 블록 실행"** 의 관용구.
+`existing`은 `it`을 명시적으로 이름 지은 것(3번과 같은 규칙). 자바로는 `if (existing != null) { ... }`. 즉 `?.let { }` = **null 아닐 때만 이 블록 실행** 관용구다.
 
-## 6. `repeat`, `attempt`, 등의 이테리체로 써진 stdlib 시그니처 확인해보기
+## 6. `repeat`와 `attempt` — stdlib 시그니처로 확인하기
 
 ```kotlin
 repeat(MAX_CODE_RETRY) { attempt -> ... }
@@ -318,41 +316,41 @@ public inline fun repeat(times: Int, action: (Int) -> Unit) {
 
 → `repeat(3) { ... }` = 블록을 **3번 반복** 실행. for 루프의 축약.
 
-### `attempt`가 뭔지 어떻게 알지?
+### `attempt`의 의미
 
 `repeat` 시그니처가 `action: (Int) -> Unit` — **람다가 `Int` 하나를 받는다**. 그 Int가 반복 인덱스(0,1,2). `{ attempt -> ... }`에서 `attempt`는 그 Int 파라미터에 붙인 이름.
 
 - 안 쓰면 기본 이름 `it`: `repeat(3) { println(it) }` → 0,1,2
 - 명시적 이름: `repeat(3) { attempt -> ... }` → `attempt` = 0,1,2
 
-`warnLog("... (attempt=${attempt + 1})")`처럼 "1번째 시도"로 사람 친화적으로 쓰려고 이름을 붙인 것.
+`warnLog("... (attempt=${attempt + 1})")`처럼 0부터 시작하는 인덱스를 로그에서는 1부터 시작하는 시도 횟수로 보여주려고 이름을 붙인 것이다.
 
 ### stdlib 동작 보는 법 (IDE)
 
 1. `repeat`에 커서 → **Go to Declaration** (IntelliJ: `Ctrl+B` / macOS `Cmd+B`)
 2. → 코틀린 stdlib `Standard.kt`의 `repeat` 정의로 점프
-3. 시그니처 `(times: Int, action: (Int) -> Unit)`를 보면 "두 번째 인자가 람다, 람다는 Int를 받음" 확인 → `attempt`의 정체
+3. 시그니처 `(times: Int, action: (Int) -> Unit)`를 보면 두 번째 인자가 람다이고, 그 람다는 `Int`를 받는다는 사실을 확인할 수 있다
 
 이 방법은 `firstOrNull`, `let`, `?.` 등 모든 stdlib에 동일하다. **모르는 코틀린 함수 만나면 선언으로 점프해 시그니처 확인**이 기본기다.
 
 ## 7. 로직 의도: `insertWithRetry`가 여러 번 시도하는 이유
 
-재시도하는 이유 — **`inviteCode`가 랜덤이고 DB에 UNIQUE 제약**이 걸어놓았따:
+재시도하는 이유 — **`inviteCode`가 랜덤이고 DB에 UNIQUE 제약**이 걸려 있기 때문이다:
 
 | 충돌 종류 | 원인 | 재시도 의미 |
 |---|---|---|
-| **초대코드 UK 충돌** | secureRamdom() 12자리 -> 36^12 중 우연히 이미 존재하는 코드 생성 (극히 드뭄) | **새 랜덤 코드로 다시 INSERT** → 재시도가 해결책 |
+| **초대코드 UK 충돌** | `SecureRandom`으로 만든 12자리 코드가 우연히 이미 존재하는 코드와 겹침 (극히 드뭄) | **새 랜덤 코드로 다시 INSERT** → 재시도가 해결책 |
 | **멱등성 UK 충돌** | 동시에 같은 `(workspace, inviter, requestId)` 요청이 race로 먼저 INSERT됨 | 재시도 대신 **기존 코드 조회해서 반환**(멱등 보장) |
 
-`catch` 안에서 둘을 구분: 멱등키로 찾아지면(`?.let`) 그 코드 반환(동시 요청에 같은 응답), 안 찾아지면 = 순수 코드 충돌이니 다음 루프에서 새 코드로 재시도. `MAX_CODE_RETRY=3`을 다 실패하면 `IllegalStateException`(사실상 불가능, 보수적으로 만든 로직임). 36^12 ≈ 4700경이라 3번 안에 거의 100% 성공.
+`catch` 안에서 둘을 구분한다. 멱등키로 찾아지면(`?.let`) 그 코드 반환(동시 요청에 같은 응답), 안 찾아지면 순수 코드 충돌이니 다음 루프에서 새 코드로 재시도한다. 36^12는 약 4.7e18(약 474경)이므로 충돌 가능성은 매우 낮지만, UNIQUE 제약을 신뢰하고 예외 경로를 처리하는 편이 안전하다.
 
-👉 멱등성을 메모리(companion)에 안 두고 **DB UNIQUE 제약 + `DuplicateKeyException` catch**에 위임 → 멀티 인스턴스/동시성에서도 안전. ([Kotlin 패턴#2]에서 본 "가변 상태는 DB에 위임" 원칙의 실제 구현.)
+멱등성을 메모리(companion)에 두지 않고 **DB UNIQUE 제약 + `DuplicateKeyException` catch**에 위임하면 멀티 인스턴스/동시성에서도 안전하다. [Kotlin 패턴#2]에서 본 가변 상태는 DB에 위임한다는 원칙의 실제 구현이다.
 
 ## 8. `notifyLowStockIfNeeded`를 afterCommit으로 안 뺀 이유
 
 전제 교정 — **`create()`엔 `@Transactional`이 아예 없다.** (발급은 단일 INSERT라 트랜잭션 불필요.)
 
-→ `@TransactionalEventListener(AFTER_COMMIT)`은 **트랜잭션이 있어야** 거는 훅이다. 트랜잭션이 없으니 afterCommit으로 뺄 대상 자체가 없다. 정확한 의문은 "왜 afterCommit 안 했나"가 아니라 **"왜 동기 호출인데 안전한가"**.
+→ `@TransactionalEventListener(AFTER_COMMIT)`은 일반적으로 트랜잭션 커밋 훅으로 쓰인다. 예제처럼 트랜잭션 경계가 없는 단일 INSERT 흐름에서는 afterCommit으로 분리할 대상이 명확하지 않다. 핵심은 **동기 호출 실패가 발급 결과를 깨뜨리지 않도록 격리했는가**다.
 
 동기인데 안전한 이유 — **`NotificationService`가 fire-and-forget을 try-catch로 구현**한다. `sendSafely` 같은 내부 메서드가:
 
@@ -364,18 +362,18 @@ try {
 }
 ```
 
-→ 알림이 실패/예외나도 `create()`로 예외가 안 올라간다. **"트랜잭션으로 격리" 대신 "예외를 안 던지도록 격리"** 한 것.
+→ 알림이 실패/예외나도 `create()`로 예외가 안 올라간다. **트랜잭션 격리 대신 예외 전파를 차단하는 방식으로 격리**한 것이다.
 
 비동기(큐/별도 스레드)로 안 뺀 이유는 **빈도 + 복잡도 트레이드오프**:
 
-- 알림은 지금 코드에선 보이지않지만(!!!) 잔여 수량이 임계점 리스트(예: `[10000, 5000, 1000, 0]`)와 **정확히 일치**할 때만 발사. 100만 발급 중 **단 4번 수준**.
-- 그 4번을 위해 비동기 인프라(스레드풀/큐/실패재처리) 도입은 과한 복잡도. 동기 + 예외격리로 충분.
+- 예시에서는 잔여 수량이 별도 임계점과 일치할 때만 알림을 보낸다고 가정한다.
+- 호출 빈도가 낮은 보조 기능을 위해 비동기 인프라(스레드풀/큐/실패재처리)를 도입하면 복잡도가 더 커질 수 있다. 이 예제에서는 동기 + 예외격리로 충분하다고 본다.
 
 | 격리 방법 | 이 코드의 선택 |
 |---|---|
 | `@Transactional` afterCommit | ❌ (트랜잭션 자체가 없음) |
 | 비동기 큐/스레드 | ❌ (호출 빈도 극소 → 복잡도 대비 이득 없음) |
-| **예외 내부 catch (fire-and-forget)** | ✅ 채택 — 가장 단순하고 충분 |
+| **예외 내부 catch (fire-and-forget)** | ✅ 채택 — 단순하고 충분한 격리 |
 
 ---
 
@@ -386,8 +384,8 @@ try {
 | `internal` vs `private const val` | 둘 다 컴파일 타임 상수, 차이는 가시성(모듈 전체 vs 클래스 내부). 실사용처가 결정 |
 | `SecureRandom` vs `Random` | 예측 불가(보안용) vs 예측 가능. 생성 비싸서 인스턴스 필드로 1회 생성·재사용, thread-safe |
 | `firstOrNull`/`it` | 조건 만족 첫 원소 or null. `it` = 단일 람다 파라미터 암묵 이름 |
-| `?.` vs `?:` | `?.` = 있으면 진행, `?:` = 없으면 대체. `?: throw`로 "없으면 예외" |
-| `?.let { }` | "null 아닐 때만 블록 실행". 람다 안 `return`은 바깥 함수 종료 |
+| `?.` vs `?:` | `?.` = 있으면 진행, `?:` = 없으면 대체. `?: throw`로 예외 처리 가능 |
+| `?.let { }` | null 아닐 때만 블록 실행. 람다 안 `return`은 바깥 함수 종료 |
 | `repeat`/`attempt` | stdlib for 축약. 람다는 인덱스(Int)를 받음 → 선언 점프로 시그니처 확인 |
 | `insertWithRetry` | 랜덤 코드 + DB UNIQUE → 코드충돌은 재시도, 멱등충돌은 기존 반환 |
 | 동기 fire-and-forget | 트랜잭션 없음 + 호출 극소 → 예외 내부 catch로 격리가 가장 단순·충분 |
@@ -396,5 +394,5 @@ try {
 
 ## 추가 학습 포인터
 
-1. **`inline fun`** — `repeat`, `let`, `firstOrNull` 정의에 붙은 `inline`. 람다를 객체로 안 만들고 호출부에 코드를 펴넣어(인라이닝) 람다 오버헤드를 없앤다. stdlib에 `inline`이 거의 다 붙은 이유를 보면 "코틀린 람다가 성능 손해 없이 쓰이는 이유"가 잡힌다.
-2. **"운영적 허용 범위" 트레이드오프** — 동일 임계점이 동시 발급 race로 두 번 알림 발사될 가능성은 있으나 허용 범위로 둘 수 있다. 어디까지 "운영적 허용"으로 두고 어디부터 엄밀히 막는지 기준을 비교해보면 설계 감각이 늘어난다.
+1. **`inline fun`** — `repeat`, `let`, `firstOrNull` 정의에 붙은 `inline`. 람다를 객체로 만들지 않고 호출부에 코드를 펴넣어(인라이닝) 람다 오버헤드를 줄인다. stdlib에 `inline`이 많이 쓰이는 이유를 보면 코틀린 람다의 성능 모델이 잡힌다.
+2. **운영적 허용 범위 트레이드오프** — 동일 임계점이 동시 발급 race로 두 번 알림 발사될 가능성은 있으나 허용 범위로 둘 수 있다. 어디까지 운영적으로 허용하고 어디부터 엄밀히 막을지 기준을 비교해보면 설계 감각이 늘어난다.
