@@ -1,5 +1,5 @@
 ---
-title: "실패해도 스스로 복구하는 정산 배치 만들기"
+title: "trailing 재조회로 실패한 날 복구하기"
 date: 2026-07-26 09:00:00 +0900
 categories: [Spring]
 tags: [kotlin, spring-batch, testcontainers, idempotency, tdd, mutation-testing, batch, reconciliation]
@@ -41,7 +41,7 @@ insert(report.asActive())
 
 ## 2. delta upsert로 매일 다시 맞춘다
 
-trailing으로 같은 주문을 다시 끌어와도 안전하려면, 지급 계산 자체가 멱등해야 한다. 이 원리는 지난 글 [존재 확인은 멱등성이 아니다](/posts/existence-is-not-idempotency/)에서 따로 다뤘다. 요약하면, 존재 여부로 이미 처리했다고 판단하면 늦게 온 취소를 놓치므로, 원천을 재생해 지금의 기대 상태를 만들고 기대와 기존의 차이만 원장에 반영한다.
+trailing으로 같은 주문을 다시 끌어와도 안전하려면, 지급 계산 자체가 멱등해야 한다. 이 원리는 지난 글 [늦게 도착하는 변경을 다루는 배치 만들기](/posts/existence-is-not-idempotency/)에서 따로 다뤘다. 요약하면, 존재 여부로 이미 처리했다고 판단하면 늦게 온 취소를 놓치므로, 원천을 재생해 지금의 기대 상태를 만들고 기대와 기존의 차이만 원장에 반영한다.
 
 ```kotlin
 val delta = expected - existing            // 부수효과는 차이만

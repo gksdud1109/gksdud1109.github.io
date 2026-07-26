@@ -1,5 +1,5 @@
 ---
-title: "존재 확인은 멱등성이 아니다 — 늦게 도착하는 변경을 다루는 원장 배치"
+title: "늦게 도착하는 변경을 다루는 배치 만들기"
 date: 2026-07-18 09:00:00 +0900
 categories: [Spring]
 tags: [kotlin, spring-batch, exposed, idempotency, reconciliation, batch, upsert]
