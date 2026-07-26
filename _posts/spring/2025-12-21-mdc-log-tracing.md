@@ -3,6 +3,7 @@ title: "MDC(Mapped Diagnostic Context)로 요청 단위 로그 추적하기"
 date: 2025-12-21 12:00:00 +0900
 categories: [Spring]
 tags: [spring, logging, mdc, logback, tracing]
+description: "MDC를 ThreadLocal 기반으로 요청 단위 로그를 추적하는 원리와 OncePerRequestFilter에서 requestId를 넣고 finally에서 제거해 JSON 로그를 요청별로 묶는 구현을 정리한다."
 pin: true
 ---
 

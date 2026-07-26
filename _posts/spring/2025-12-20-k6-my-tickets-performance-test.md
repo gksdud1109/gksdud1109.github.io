@@ -3,6 +3,7 @@ title: "K6 성능테스트 - 내 티켓 목록 조회 API 성능 개선 사례"
 date: 2025-12-20 10:00:00 +0900
 categories: [Spring]
 tags: [spring, performance, k6, jpa, hikaricp, optimization, load-testing]
+description: "K6 부하테스트로 내 티켓 목록 조회 API의 성능을 측정하고, HikariCP 커넥션 풀 포화와 N+1 잠재 리스크를 분석해 Fetch Join과 페이지네이션으로 개선한 사례를 정리한다."
 ---
 
 ## 개요

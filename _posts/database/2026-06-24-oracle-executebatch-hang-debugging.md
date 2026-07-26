@@ -3,6 +3,7 @@ title: "Oracle 배치 INSERT가 멈췄을 때 - Exposed 자동 PK와 executeBatc
 date: 2026-06-24 09:00:00 +0900
 categories: [Database]
 tags: [debugging, oracle, jdbc, exposed, batch, troubleshooting]
+description: "Oracle JDBC 배치 INSERT가 예외 없이 멈추는 hang을 Exposed 자동 PK와 ORA-02289, executeBatch 경로까지 좁혀가며 행별 executeUpdate로 우회한 디버깅 기록이다."
 ---
 
 > Hive 기반 데이터 레이크에서 Oracle 캐시 테이블로 대량 적재하려 만든 배치가 **예외도, 타임아웃도 없이 멈췄다**. 네트워크·커넥션 풀·DB 락을 먼저 의심했지만, 같은 환경에서 정상 동작하던 선례 코드와 1:1로 대조하면서 원인을 찾아나갈 수 있었다.

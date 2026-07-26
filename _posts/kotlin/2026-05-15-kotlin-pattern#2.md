@@ -3,6 +3,7 @@ title: "[Kotlin 패턴#2] DTO 설계로 보는 코틀린: sealed interface · da
 date: 2026-05-15 22:00:00 +0900
 categories: [Kotlin]
 tags: [programming, kotlin]
+description: "코틀린 DTO 설계를 자바와 비교한다. sealed interface로 요청·응답 DTO 묶기, data class 자동 생성, companion object of() 정적 팩토리, init 블록 검증을 정리했다."
 ---
 
 > 이전 [Kotlin 패턴#1] 글에서 만든 초대 코드 발급 API의 요청/응답 DTO를 직접 설계하며 확인한 내용을 정리했다. `sealed interface`로 DTO를 묶는 컨벤션, `data class`/`companion object`/`init {}`이 각각 무슨 일을 하는지, 그리고 자바 시선에서 자주 혼동되는 `( )` vs `{ }`까지 코틀린 ↔ 자바 대비로 풀었다. 예제 코드는 학습용으로 직접 구성했다.

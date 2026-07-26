@@ -3,6 +3,7 @@ title: "분산 환경 발급 한도 카운트 전략 - 카운터 row의 함정�
 date: 2026-05-20 22:00:00 +0900
 categories: [Spring]
 tags: [backend, oracle, concurrency, rac, distributed-system, design]
+description: "여러 앱 인스턴스와 Oracle RAC 환경에서 발급 한도 카운트를 설계하며 단일 카운터 row의 hot block과 Cache Fusion 직렬화 비용, 샤딩 카운터와 시퀀스 캡 대안을 비교한 검토 기록."
 ---
 
 > 큰 캡(cap)이 걸린 외부 연동 발급 API 를, 여러 애플리케이션 인스턴스 + Oracle RAC 환경에서

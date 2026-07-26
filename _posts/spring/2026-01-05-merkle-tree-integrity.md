@@ -3,6 +3,7 @@ title: "Merkle Tree로 양도 이력 무결성 검증하기"
 date: 2026-01-05 12:00:00 +0900
 categories: [Spring]
 tags: [spring, merkle-tree, blockchain, integrity, security]
+description: "티켓 양도 이력의 위변조를 감지하려고 SHA-256 해시로 Merkle Tree를 구성하고 Merkle Root를 Loki 로그 파이프라인에 앵커링해 사후 검증하는 구조를 구현한 기록"
 ---
 
 ## 개요

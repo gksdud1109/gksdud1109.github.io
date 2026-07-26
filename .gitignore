@@ -26,3 +26,9 @@ package-lock.json
 _sass/vendors
 assets/js/dist
 CLAUDE.md
+
+# OMC 오케스트레이션 툴 상태 (세션 덤프·체크포인트, 머신 로컬·재생성됨)
+.omc/
+
+# OS
+.DS_Store

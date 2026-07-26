@@ -3,6 +3,7 @@ title: "PostgreSQL + JPA ID 생성 전략 - Sequence 기반 최적화"
 date: 2025-12-05 12:00:00 +0900
 categories: [Database]
 tags: [database, postgresql, jpa, sequence, batch-insert, hibernate]
+description: "PostgreSQL Sequence 기반 JPA ID 생성 전략에서 allocationSize로 ID를 미리 캐싱해 batch insert를 활성화하고 대량 insert 성능을 개선하는 방법을 정리한다."
 ---
 
 ## 개요

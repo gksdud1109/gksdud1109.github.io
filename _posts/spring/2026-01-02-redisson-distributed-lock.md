@@ -3,6 +3,7 @@ title: "Redisson 분산 락으로 좌석 선택 동시성 제어하기"
 date: 2026-01-02 12:00:00 +0900
 categories: [Spring]
 tags: [spring, redis, redisson, distributed-lock, concurrency]
+description: "좌석 선택 경합을 Redisson 분산 락으로 Redis에서 흡수하고, DB 조건부 UPDATE로 최종 무결성을 보장하는 이중 방어 구조와 fast-fail 전략을 정리한다."
 ---
 
 ## 개요

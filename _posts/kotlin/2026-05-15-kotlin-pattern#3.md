@@ -3,6 +3,7 @@ title: "[Kotlin 패턴#3] 서비스 레이어로 보는 코틀린: 가시성·Se
 date: 2026-05-15 23:00:00 +0900
 categories: [Kotlin]
 tags: [programming, kotlin]
+description: "코틀린 서비스 레이어를 자바와 비교한다. internal·private 가시성, SecureRandom, firstOrNull, ?.let, repeat 재시도, 동기 fire-and-forget을 정리했다."
 ---
 
 > [Kotlin 패턴#1]·[#2]에서 만든 초대 코드 발급 API의 서비스 레이어를 직접 작성해보며 확인한 8가지를 정리했다. 가시성 제어자, `SecureRandom`, `firstOrNull`/`it`, `?:` vs `?.`, `?.let`, `repeat`, 재시도 패턴, 동기 fire-and-forget까지 코틀린 ↔ 자바 대비로 풀었다. 예제 코드는 학습용으로 직접 구성했다.

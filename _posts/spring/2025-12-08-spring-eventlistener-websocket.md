@@ -3,6 +3,7 @@ title: "Spring EventListener 기반 WebSocket 실시간 브로드캐스트 구�
 date: 2025-12-08 12:00:00 +0900
 categories: [Spring]
 tags: [spring, websocket, eventlistener, stomp, realtime]
+description: "Spring EventListener와 STOMP WebSocket을 조합해 좌석 상태 변경을 실시간 브로드캐스트하는 구현을 정리하고, 커스텀 Broadcaster 방식과 결합도·확장성을 비교한다."
 ---
 
 ## 개요

@@ -3,6 +3,7 @@ title: "@TransactionalEventListener - 트랜잭션 커밋 이후 이벤트 발�
 date: 2025-12-20 12:00:00 +0900
 categories: [Spring]
 tags: [spring, transaction, event, transactionaleventlistener, websocket]
+description: "@TransactionalEventListener AFTER_COMMIT으로 트랜잭션 커밋 이후에만 WebSocket 이벤트를 발행하고, DB 변경 시 REQUIRES_NEW가 필요한 이유를 정리한다."
 pin: true
 ---
 

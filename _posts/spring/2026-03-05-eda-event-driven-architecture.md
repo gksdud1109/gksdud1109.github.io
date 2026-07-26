@@ -3,6 +3,7 @@ title: "EDA(Event-Driven Architecture)란 무엇인가 — MSA의 문제를 이�
 date: 2026-03-05 12:00:00 +0900
 categories: [Spring]
 tags: [spring, eda, event-driven, msa, kafka, pub-sub, architecture]
+description: "MSA의 서비스 간 통신 복잡성과 데이터 일관성 문제를 EDA로 완화하는 개념을 정리하고, Pub/Sub과 메시지 큐, Kafka 이벤트 스트리밍 세 모델과 MDC 분산 추적을 비교한다."
 ---
 
 > MSA를 도입하면 확장성과 유연성을 얻지만, 동시에 새로운 복잡성을 갖게 된다. EDA는 그 복잡성을 줄이는 아키텍처 패턴이다.

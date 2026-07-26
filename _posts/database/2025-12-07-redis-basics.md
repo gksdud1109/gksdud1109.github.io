@@ -3,6 +3,7 @@ title: "Redis 기초 - 인메모리 데이터 저장소의 개념과 특징"
 date: 2025-12-07 12:00:00 +0900
 categories: [Database]
 tags: [database, redis, cache, in-memory, nosql]
+description: "Redis 인메모리 키-값 저장소의 싱글 스레드 원자성, RDB와 AOF 영속성 옵션, 복제와 클러스터 확장 방식까지 기본 개념을 정리한다."
 ---
 
 ## 개요

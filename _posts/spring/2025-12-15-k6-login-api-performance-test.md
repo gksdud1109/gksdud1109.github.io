@@ -3,6 +3,7 @@ title: "K6 성능테스트 - 로그인 API 병목 분석과 개선 방안"
 date: 2025-12-15 10:00:00 +0900
 categories: [Spring]
 tags: [spring, performance, k6, bcrypt, hikaricp, jwt, load-testing]
+description: "로그인 API를 k6로 부하테스트해 BCrypt 검증, HikariCP 커넥션 풀 고갈, JWT 키 재생성이 겹치는 병목을 분석하고 RefreshToken Redis 이전 등 개선안을 정리한다."
 ---
 
 ## 개요

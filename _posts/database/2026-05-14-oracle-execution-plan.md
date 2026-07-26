@@ -3,6 +3,7 @@ title: "Oracle 실행계획 읽는 법 - EXPLAIN PLAN과 옵티마이저"
 date: 2026-05-14 13:00:00 +0900
 categories: [Database]
 tags: [database, oracle, sql, execution-plan, optimizer]
+description: "Oracle 실행계획을 EXPLAIN PLAN과 DBMS_XPLAN으로 떠보고, CBO 옵티마이저 판단 기준과 INDEX RANGE SCAN, access/filter 조건을 읽는 법을 정리한다."
 ---
 
 > 샘플 OLTP 테이블(예시 `SAMPLE_TXN`)의 쿼리로 실행계획을 떠보고 읽는다. 모든 테이블/인덱스/식별자는 학습용 예시 값이다. 인덱스 물리 구조·PGA·OLTP 는 별도 글 「Oracle 인덱스 구조 원리」 참고.

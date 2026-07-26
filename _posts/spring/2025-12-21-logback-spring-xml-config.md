@@ -3,6 +3,7 @@ title: "logback-spring.xml 설정 - 환경별 로그 구성과 JSON 로깅"
 date: 2025-12-21 13:00:00 +0900
 categories: [Spring]
 tags: [spring, logging, logback, json, mdc, grafana]
+description: "logback-spring.xml에서 springProfile로 환경별 로그를 나누고, 운영에서는 LogstashEncoder로 MDC 필드를 담은 JSON 로그를 stdout으로 출력해 Loki로 수집한다."
 ---
 
 ## 개요

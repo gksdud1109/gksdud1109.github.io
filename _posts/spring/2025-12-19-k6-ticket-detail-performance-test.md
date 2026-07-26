@@ -3,6 +3,7 @@ title: "K6 성능테스트 - 티켓 상세 조회 API N+1 문제와 Fetch Join �
 date: 2025-12-19 10:00:00 +0900
 categories: [Spring]
 tags: [spring, performance, k6, jpa, n+1, fetch-join, hikaricp, load-testing]
+description: "티켓 상세 조회 API를 k6로 부하테스트해 JPA N+1과 OIV로 생긴 병목을 분석하고, Fetch Join으로 쿼리를 4개에서 2개로 줄여 응답시간을 개선한 과정을 정리한다."
 ---
 
 ## 개요

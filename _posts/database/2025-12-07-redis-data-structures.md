@@ -3,6 +3,7 @@ title: "Redis 자료구조 - List, Set, Sorted Set, Hash, Bitmap 활용 가이�
 date: 2025-12-07 13:00:00 +0900
 categories: [Database]
 tags: [database, redis, data-structure, spring, redistemplate]
+description: "Redis의 List, Set, Sorted Set, Hash, Bitmap 자료구조별 명령어와 큐, 랭킹, 출석 체크 활용법을 Spring RedisTemplate 예시로 정리한다."
 ---
 
 ## 개요

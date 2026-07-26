@@ -3,6 +3,7 @@ title: "OS 동기화 기초 - 임계 구역부터 동기화 도구까지"
 date: 2026-02-12 12:00:00 +0900
 categories: [Spring]
 tags: [os, synchronization, concurrency, mutex, semaphore, monitor]
+description: "공룡책 6장을 기반으로 임계 구역과 race condition부터 Peterson 알고리즘, CAS, 뮤텍스·세마포어·모니터까지 OS 동기화 도구의 동작 원리를 정리한 기초 노트"
 ---
 
 ## 개요

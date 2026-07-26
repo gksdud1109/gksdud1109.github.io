@@ -3,6 +3,7 @@ title: "[성능테스트] 좌석 선택 API 동시성 제어 전략 비교 - Opt
 date: 2026-01-19 16:00:00 +0900
 categories: [Spring]
 tags: [spring, performance, k6, concurrency, optimistic-lock, cas, redisson, jpa]
+description: "좌석 선택 API 동시성 제어를 Optimistic Lock, CAS, Redisson 분산락 세 전략으로 나눠 k6 부하테스트로 p95·p99 tail latency와 CPU·GC·DB 대기 스레드를 비교하고 CAS를 채택한 실험"
 pin: true
 ---
 

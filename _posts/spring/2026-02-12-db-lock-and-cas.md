@@ -3,6 +3,7 @@ title: "DB 락과 CAS - InnoDB와 PostgreSQL의 동기화 메커니즘"
 date: 2026-02-12 14:00:00 +0900
 categories: [Spring]
 tags: [database, mysql, postgresql, innodb, cas, lock, concurrency]
+description: "InnoDB와 PostgreSQL에서 조건부 UPDATE 기반 DB-CAS가 내부적으로 어떻게 동작하는지 Latch와 Transaction Lock, Record·Gap·Next-Key Lock, MVCC 관점으로 비교한 정리"
 ---
 
 ## 개요

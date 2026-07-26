@@ -3,6 +3,7 @@ title: "K6 성능테스트 - 좌석 목록 조회 API 병목 분석"
 date: 2025-12-16 10:00:00 +0900
 categories: [Spring]
 tags: [spring, performance, k6, jpa, n+1, hikaricp, load-testing]
+description: "좌석 목록 조회 API를 k6로 부하테스트해 JPA N+1과 OIV Lazy 로딩, HikariCP 대기로 생긴 고부하 병목을 분석하고 Fetch Join과 페이지네이션 개선안을 정리한다."
 ---
 
 ## 개요

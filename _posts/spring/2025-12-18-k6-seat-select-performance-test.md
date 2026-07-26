@@ -3,6 +3,7 @@ title: "K6 성능테스트 - 좌석 선택 API 병목 분석과 트랜잭션 최
 date: 2025-12-18 10:00:00 +0900
 categories: [Spring]
 tags: [spring, performance, k6, transaction, websocket, hikaricp, load-testing]
+description: "좌석 선택 API를 k6로 부하테스트해 과도한 트랜잭션 범위와 동기 WebSocket 전송으로 생긴 HikariCP 병목을 분석하고, TransactionalEventListener 비동기화로 개선한다."
 ---
 
 ## 개요

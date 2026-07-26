@@ -3,6 +3,7 @@ title: "PostgreSQL MVCC - MySQL과의 동시성 제어 비교"
 date: 2025-12-02 12:00:00 +0900
 categories: [Database]
 tags: [database, postgresql, mysql, mvcc, concurrency, transaction]
+description: "MVCC 동시성 제어를 MySQL InnoDB의 Undo Log와 PostgreSQL의 Tuple Versioning으로 비교하고 Lost Update와 Phantom Read 방지 차이를 정리한다."
 ---
 
 ## 개요

@@ -3,6 +3,7 @@ title: "[Kotlin 패턴#1] API 컨트롤러로 보는 코틀린"
 date: 2026-05-15 21:00:00 +0900
 categories: [Kotlin]
 tags: [programming, kotlin]
+description: "코틀린 Spring API 컨트롤러를 자바와 비교한다. 주 생성자 주입, @RequestHeader required=false 와 nullable, 명명 인자로 동일 타입 파라미터 실수를 막는 패턴을 정리했다."
 ---
 
 > 자바/Spring 경험으로 코틀린 코드를 읽을 때 먼저 확인하게 되는 지점들이 있다. 코틀린/Spring으로 외부 API 인증(API Key + HMAC 서명) 컨트롤러를 직접 작성해보며 자바와 다른 3가지를 정리했다. 주제는 주 생성자, `@RequestHeader` nullable, 명명 인자(named argument)다. 예제 코드는 학습용으로 직접 구성했다.

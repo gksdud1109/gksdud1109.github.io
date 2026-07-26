@@ -3,6 +3,7 @@ title: "Oracle 인덱스 구조 원리 - row는 어디에 어떻게 저장되나
 date: 2026-05-14 12:00:00 +0900
 categories: [Database]
 tags: [database, oracle, index, b-tree, oltp]
+description: "Oracle 인덱스가 row를 찾아가는 원리를 ROWID 구조, PCTFREE와 row migration, B-tree leaf 연결, PGA/SGA 차이로 OLTP 관점에서 정리한다."
 ---
 
 > 샘플 OLTP 테이블(예시 `SAMPLE_TXN`)을 다루며 INSERT 한 row가 어디에 저장되고, 인덱스가 그 row를 어떻게 찾아가는지 따라간다. 모든 테이블/인덱스 이름은 학습용 예시 값이다. 실행계획 읽는 법은 별도 글 「Oracle 실행계획 읽는 법」 참고.

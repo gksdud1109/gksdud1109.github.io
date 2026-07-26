@@ -3,6 +3,7 @@ title: "[Kotlin 패턴#4] 서비스 트랜잭션·동시성 방어 설계: @Tran
 date: 2026-05-20 21:00:00 +0900
 categories: [Kotlin]
 tags: [programming, kotlin]
+description: "코틀린 서비스 트랜잭션과 동시성 방어 설계. @Transactional 경계, Oracle INDEX RANGE SCAN, 누적 가중치 랜덤 추첨, TOCTOU를 조건부 UPDATE로 막는 방법을 정리했다."
 ---
 
 > [Kotlin 패턴#1~#3]에서 만든 초대 코드 발급 API의 사용(redeem) 서비스를 직접 작성해보며 확인한 5가지를 정리했다. `@Transactional` 경계와 커넥션 점유, 인덱스 풀스캔으로 오해하기 쉬운 RANGE SCAN, pre-check / race guard 이중 쿼리 의도, 가중 랜덤 추첨, 그리고 TOCTOU 방어까지. 예제 코드는 학습용으로 직접 구성했다.

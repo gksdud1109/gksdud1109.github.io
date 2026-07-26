@@ -3,6 +3,7 @@ title: "Payment V2 아키텍처 - PG 연동 결제 흐름과 장애 대응 전�
 date: 2026-01-04 12:00:00 +0900
 categories: [Spring]
 tags: [spring, payment, toss, architecture, transaction, circuit-breaker]
+description: "Toss Payments PG 연동 결제에서 외부 API 호출과 DB 트랜잭션을 분리하고 Resilience4j 서킷브레이커, 타임아웃, 3단계 멱등성 검증으로 장애 전파와 중복 결제를 막은 아키텍처 정리"
 pin: true
 ---
 
