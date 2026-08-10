@@ -3,7 +3,22 @@ title: "Oracle 배치 INSERT가 멈췄을 때 - Exposed 자동 PK와 executeBatc
 date: 2026-06-24 09:00:00 +0900
 categories: [Database]
 tags: [debugging, oracle, jdbc, exposed, batch, troubleshooting]
-description: "Oracle JDBC 배치 INSERT가 예외 없이 멈추는 hang을 Exposed 자동 PK와 ORA-02289, executeBatch 경로까지 좁혀가며 행별 executeUpdate로 우회한 디버깅 기록이다."
+description: "[2026-08-10 정정: 이 글의 hang 원인 결론은 틀렸습니다. 후속 글 참고] Oracle JDBC 배치 INSERT가 예외 없이 멈추는 hang을 Exposed 자동 PK와 ORA-02289, executeBatch 경로까지 좁혀가며 행별 executeUpdate로 우회한 디버깅 기록이다."
+---
+
+> ## ⚠️ 정정 안내 (2026-08-10)
+>
+> **이 글의 결론은 틀렸습니다.** 7주 뒤 재추적에서 진범이 따로 있다는 것을 확인했습니다.
+>
+> - executeBatch도 IDENTITY도 원인이 아니었습니다. 진범은 WAS가 JDBC 드라이버를 치환해 물려둔 SQL 로깅 라이브러리(log4sql)가 `addBatch` 경로에서만 바인드 파라미터를 리셋하지 않아 누적분을 매 호출 렌더링한 것이었습니다.
+> - 그래서 이 글이 해결이라고 쓴 **행별 `executeUpdate`는 우회였습니다.** 그 우회가 6배 느린 상태를 7주간 고착시켰습니다.
+> - 실제 해결은 `addBatch()` 뒤 `clearParameters()` 한 줄이며, 약 36만 행 적재가 394초에서 66초로 줄었습니다.
+>
+> 무엇을 근거로 이렇게 잘못 판단했는지, 어떻게 뒤집었는지는 후속 글에 정리했습니다.
+> 👉 **[executeBatch hang의 진범을 7주 만에 찾기](/posts/executebatch-hang-real-culprit/)**
+>
+> 아래 본문은 당시 기록으로 남겨둡니다. 디버깅 절차(단계 관측, 선례 대조)와 `ORA-02289` 부분은 여전히 유효하지만, **hang의 원인 규명 부분은 후속 글을 기준으로 읽어주세요.**
+
 ---
 
 > Hive 기반 데이터 레이크에서 Oracle 캐시 테이블로 대량 적재하려 만든 배치가 **예외도, 타임아웃도 없이 멈췄다**. 네트워크·커넥션 풀·DB 락을 먼저 의심했지만, 같은 환경에서 정상 동작하던 선례 코드와 1:1로 대조하면서 원인을 찾아나갈 수 있었다.
@@ -222,6 +237,8 @@ object CacheTable : IdTable<Long>("CACHE_TABLE") {
 - 변환 실패는 빈 코드 값 데이터 문제였다.
 - `ORA-02289`는 Exposed 자동 PK 전략과 Oracle IDENTITY DDL의 불일치였다.
 - 최종 적재 hang은 이 환경에서 `executeBatch` 경로를 탈 때만 재현됐고, 행별 `executeUpdate`로 우회했다.
+
+> ⚠️ **위 마지막 항목은 틀린 결론입니다.** 진범은 드라이버를 치환해 물려둔 SQL 로깅 라이브러리였고, 행별 `executeUpdate`는 해결이 아니라 우회였습니다. 자세한 내용은 [executeBatch hang의 진범을 7주 만에 찾기](/posts/executebatch-hang-real-culprit/)를 참고하세요.
 
 가장 중요한 교훈은 **환경을 의심하기 전에 같은 환경에서 되는 선례와 1:1로 대조하는 것**이다. 그리고 hang처럼 예외가 없는 문제는, 예외 처리보다 단계 관측이 먼저다.
 
