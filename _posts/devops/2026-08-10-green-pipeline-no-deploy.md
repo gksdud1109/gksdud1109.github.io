@@ -4,6 +4,7 @@ date: 2026-08-10 11:00:00 +0900
 categories: [DevOps]
 tags: [terraform, ecs, deployment, iac, docker, troubleshooting]
 description: "파이프라인은 전부 성공했는데 런타임 값이 옛날 그대로였다. 가변 태그와 선언적 IaC가 만나면 상태 비교가 무력화된다는 것, 그리고 배포 반영을 런타임에서 확인하는 방법."
+pin: true
 ---
 
 수정한 코드를 머지하고 빌드하고 배포했다. 파이프라인은 전부 초록이었다. 그런데 검증 지표가 옛날 값 그대로였다.

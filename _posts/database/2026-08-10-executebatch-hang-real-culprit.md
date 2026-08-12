@@ -4,6 +4,7 @@ date: 2026-08-10 09:00:00 +0900
 categories: [Database]
 tags: [debugging, jdbc, oracle, batch, performance, thread-dump, troubleshooting]
 description: "7주 전 발행한 트러블슈팅 글의 결론이 틀렸다. executeBatch는 무죄였고 진범은 드라이버를 치환해 물려둔 SQL 로깅 라이브러리였다. 스레드 덤프와 바이트코드로 메커니즘을 확정하고 표준 API 한 줄로 6배를 되찾은 기록."
+pin: true
 ---
 
 7주 전에 [트러블슈팅 글](/posts/oracle-executebatch-hang-debugging/)을 하나 발행했다. 데이터 레이크에서 읽어온 대량 데이터를 캐시 테이블에 적재하는 배치가 예외도 타임아웃도 없이 멈췄다. 결론은 이랬다.
@@ -163,4 +164,3 @@ INSERT 기준 6배다. 부수 효과도 둘 있었다.
 5. **발행은 종결이 아니다.** 틀린 결론을 공개해두면 다른 사람도 같은 우회로 따라 들어온다. 정정할 의무가 남는다.
 
 마지막 항목 때문에 이 글을 썼다. [원글](/posts/oracle-executebatch-hang-debugging/)에는 이 글로 오는 정정 링크를 달아뒀다.
-

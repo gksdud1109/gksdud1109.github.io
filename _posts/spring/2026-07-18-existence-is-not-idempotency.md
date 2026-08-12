@@ -4,6 +4,7 @@ date: 2026-07-18 09:00:00 +0900
 categories: [Spring]
 tags: [kotlin, spring-batch, exposed, idempotency, reconciliation, batch, upsert]
 description: "'이미 행이 있으니 처리했다'는 판단이 왜 취소를 놓치는가. 존재 확인 대신 기대 상태와의 차이(delta)로 원장을 맞추는 배치 설계."
+pin: true
 ---
 
 ## 이미 처리한 줄 알았는데 숫자가 안 맞는다

@@ -4,6 +4,7 @@ date: 2026-07-26 09:00:00 +0900
 categories: [Spring]
 tags: [kotlin, spring-batch, testcontainers, idempotency, tdd, mutation-testing, batch, reconciliation]
 description: "정산 금액이 맞지 않는다는 제보에서 시작했지만, 남긴 건 조사 결과가 아니라 실패해도 스스로 다시 수집하고(trailing) 매일 다시 계산해 맞추고(delta upsert) 테스트로 잠근 배치다."
+pin: true
 ---
 
 운영에서 정산 최종 리포트와 우리 쪽 데이터가 맞지 않는다는 제보가 왔다. 며칠을 파고들어 비교 범위를 정렬하고, 산술 정합성과 완전성을 나눠 보고, 배치 실행 이력을 뒤졌다. 그렇게 알아낸 사실을 나열하면 이렇게 끝난다. 조회 범위를 맞췄고, 이미 지급된 건의 산술은 맞았고, 특정 날짜 배치가 실패했고, 헷갈리는 원장을 골라냈다.

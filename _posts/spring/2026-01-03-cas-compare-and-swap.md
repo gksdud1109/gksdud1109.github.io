@@ -4,7 +4,6 @@ date: 2026-01-03 12:00:00 +0900
 categories: [Spring]
 tags: [spring, cas, concurrency, optimistic-lock, database]
 description: "좌석 예약 동시성에서 @Version Optimistic Lock이 commit 시점 예외로 500을 내는 한계를 조건부 UPDATE 기반 CAS 패턴으로 바꿔 409 경쟁 실패로 처리한 과정"
-pin: true
 ---
 
 ## 개요

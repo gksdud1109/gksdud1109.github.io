@@ -4,6 +4,7 @@ date: 2026-03-10 23:00:00 +0900
 categories: [Spring]
 tags: [spring, payment, concurrency, idempotency, circuit-breaker, k6, optimistic-lock, test]
 description: "결제 V2의 동시성과 멱등성을 낙관적 락과 UNIQUE 제약, 서킷 브레이커로 방어하고 k6 부하테스트와 통합 테스트로 중복 결제 차단과 PG 장애 시 상태 보존을 사후 검증한 기록."
+pin: true
 ---
 
 > [Payment V2 아키텍처 포스팅]({% post_url 2026-01-04-payment-v2-architecture %})에서 설계한 방어 구조가 실제로 의도대로 동작하는지 프로젝트 종료 후 개인 fork에서 사후 검증했다. 구현 당시에는 설계와 기능 완성에 집중했고, 이후 결제 파트의 무결성과 장애 대응 설계를 테스트와 수치로 다시 확인했다.

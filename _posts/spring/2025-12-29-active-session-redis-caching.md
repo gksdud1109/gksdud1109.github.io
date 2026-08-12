@@ -4,7 +4,6 @@ date: 2025-12-29 12:00:00 +0900
 categories: [Spring]
 tags: [spring, redis, session, authentication, caching, performance]
 description: "싱글 디바이스 로그인을 유지하면서 매 요청마다 DB에서 조회하던 ActiveSession을 Redis로 캐싱하고, fail-close와 TTL jitter로 응답 시간을 96% 줄인 과정을 정리한다."
-pin: true
 ---
 
 ## 개요
