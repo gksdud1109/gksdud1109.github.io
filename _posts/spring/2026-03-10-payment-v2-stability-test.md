@@ -1,9 +1,9 @@
 ---
-title: "결제 무결성과 장애 전파 차단 검증: 동시성·멱등성·PG 장애 테스트"
+title: "동시 요청과 PG 장애 상황에서 결제 로직 검증하기"
 date: 2026-03-10 23:00:00 +0900
 categories: [Spring]
 tags: [spring, payment, concurrency, idempotency, circuit-breaker, k6, optimistic-lock, test]
-description: "결제 V2의 동시성과 멱등성을 낙관적 락과 UNIQUE 제약, 서킷 브레이커로 방어하고 k6 부하테스트와 통합 테스트로 중복 결제 차단과 PG 장애 시 상태 보존을 사후 검증한 기록."
+description: "낙관적 락과 UNIQUE 제약으로 중복 결제를 막고, PG 장애가 내부 결제 상태에 영향을 주지 않는지 k6 부하 테스트와 통합 테스트로 검증했다."
 pin: true
 ---
 

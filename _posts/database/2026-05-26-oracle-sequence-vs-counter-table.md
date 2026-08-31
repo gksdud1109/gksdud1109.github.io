@@ -1,9 +1,9 @@
 ---
-title: "SEQUENCE가 한도 체크 도구로 적합한가 - 도구 의도 vs 사용 케이스 미스매치"
+title: "Oracle SEQUENCE로 발급 한도를 관리하면 안 되는 이유"
 date: 2026-05-26 18:00:00 +0900
 categories: [Database]
 tags: [database, oracle, sequence, rac, concurrency, design]
-description: "발급 한도 체크 비용을 줄이려고 SEQUENCE NEXTVAL을 떠올렸을 때 생기는 도구 의도와 사용 케이스의 미스매치를 정리한다. 5가지 옵션을 O(1) vs O(N) 너머의 비용 차원에서 비교한다."
+description: "발급 한도 조회 비용을 줄이기 위해 SEQUENCE NEXTVAL을 사용하는 방안을 검토했다. SEQUENCE가 현재 발급 수를 정확히 나타내지 못하는 이유와 다섯 가지 대안을 비교한다."
 ---
 
 > 발급마다 `COUNT(*)`가 무거우니 SEQUENCE NEXTVAL로 한도 체크하면 비용을 줄일 수 있지 않을까. 합리적으로 보이는 직관이지만, **SEQUENCE는 monotonic ID 생성 도구지 한도 체크 도구가 아니다.** 도구의 원래 의도와 지금 쓰려는 용도의 미스매치를 짚는 글이다.

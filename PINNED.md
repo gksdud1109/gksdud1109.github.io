@@ -10,12 +10,12 @@
 
 | # | 발행일 | 제목 | 보여주는 역량 |
 |---|---|---|---|
-| 1 | 2026-08-10 | [배포는 초록인데 코드가 안 바뀐 이유 찾기](/posts/green-pipeline-no-deploy/) | ECS·Terraform 배포 검증 |
-| 2 | 2026-08-10 | [executeBatch hang의 진범을 7주 만에 찾기](/posts/executebatch-hang-real-culprit/) | 런타임 분석·배치 성능 개선 |
-| 3 | 2026-07-26 | [trailing 재조회로 실패한 날 복구하기](/posts/self-healing-settlement-batch/) | 원장 정합성·실패 복구·테스트 |
-| 4 | 2026-07-18 | [늦게 도착하는 변경을 다루는 배치 만들기](/posts/existence-is-not-idempotency/) | 멱등성·차액 반영 설계 |
-| 5 | 2026-03-10 | [결제 무결성과 장애 전파 차단 검증](/posts/payment-v2-stability-test/) | 결제 무결성·장애 시나리오 검증 |
-| 6 | 2026-01-19 | [좌석 선택 API 동시성 제어 전략 비교](/posts/concurrency-comparison-test/) | 부하테스트·기술 선택 근거 |
+| 1 | 2026-08-10 | [배포 파이프라인은 성공했는데 ECS에는 이전 이미지가 떠 있었다](/posts/green-pipeline-no-deploy/) | ECS·Terraform 배포 검증 |
+| 2 | 2026-08-10 | [executeBatch가 멈춘 원인은 SQL 로깅 라이브러리였다](/posts/executebatch-hang-real-culprit/) | 런타임 분석·배치 성능 개선 |
+| 3 | 2026-07-26 | [최근 7일을 다시 조회해 누락된 정산 데이터 복구하기](/posts/self-healing-settlement-batch/) | 원장 정합성·실패 복구·테스트 |
+| 4 | 2026-07-18 | [뒤늦게 들어온 취소까지 반영하는 배치 설계](/posts/existence-is-not-idempotency/) | 멱등성·차액 반영 설계 |
+| 5 | 2026-03-10 | [동시 요청과 PG 장애 상황에서 결제 로직 검증하기](/posts/payment-v2-stability-test/) | 결제 무결성·장애 시나리오 검증 |
+| 6 | 2026-01-19 | [좌석 선택 API의 동시성 제어 방식 비교](/posts/concurrency-comparison-test/) | 부하테스트·기술 선택 근거 |
 
 ---
 

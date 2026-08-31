@@ -1,12 +1,12 @@
 ---
-title: "Gradle 중첩 include가 만든 유령 프로젝트 걷어내기"
+title: "Gradle 중첩 include로 의존성 버전이 비어 버린 문제"
 date: 2026-08-10 12:00:00 +0900
 categories: [DevOps]
 tags: [gradle, kotlin, build, dependency-management, spring-boot, troubleshooting]
-description: "Could not find group:artifact: 에러가 리포지토리를 선언하라고 안내했지만 리포지토리 문제가 아니었다. 콜론 뒤 빈 버전과 중첩 include가 자동 생성한 유령 프로젝트를 추적한 기록."
+description: "Could not find group:artifact: 오류를 처음에는 저장소 문제로 봤지만, 실제 원인은 중첩 include가 자동으로 만든 중간 프로젝트에 BOM이 적용되지 않은 것이었다. 프로젝트별 의존성 해석 결과로 원인을 확인했다."
 ---
 
-`./gradlew build`가 이 에러로 죽었다.
+`./gradlew build`가 다음 오류로 실패했다.
 
 ```text
 Could not find org.jetbrains.kotlinx:kotlinx-serialization-json:
@@ -45,9 +45,9 @@ include("application:partners-c:fortune")
 |    +--- Project ':application:partners-b'    ← 이것도
 ```
 
-중첩 경로를 include하면 Gradle이 중간 경로를 **컨테이너 프로젝트로 자동 생성**한다. 에러가 난 세 프로젝트가 바로 이 유령이었다.
+중첩 경로를 include하면 Gradle이 중간 경로를 **컨테이너 프로젝트로 자동 생성**한다. 오류가 발생한 세 프로젝트가 이렇게 만들어진 중간 프로젝트였다.
 
-## 유령은 빌드 파일이 없다
+## 자동 생성된 중간 프로젝트에는 빌드 파일이 없다
 
 이 프로젝트들은 하위 모듈 디렉터리만 있고 소스도 `build.gradle.kts`도 없는 껍데기다. 빌드 파일이 없으니 플러그인을 적용할 방법 자체가 없다.
 
@@ -56,13 +56,13 @@ include("application:partners-c:fortune")
 ```kotlin
 subprojects {
     dependencies {
-        add("implementation", "org.jetbrains.kotlin:kotlin-reflect")              // 살아남음
-        add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json") // 죽음
+        add("implementation", "org.jetbrains.kotlin:kotlin-reflect")              // 버전 해석 성공
+        add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json") // 버전 해석 실패
     }
 }
 ```
 
-둘 다 버전이 없다. 그런데 하나만 죽는다.
+둘 다 버전을 직접 적지 않았지만 하나만 해석에 실패했다.
 
 ## 글자 하나 차이로 버전 공급자가 다르다
 
@@ -76,12 +76,12 @@ subprojects {
 추측으로 두지 않고 프로젝트별 해석 결과를 직접 재봤다.
 
 ```text
-:application (유령)                :application:service-a (리프)
+:application (중간 프로젝트)       :application:service-a (리프)
 kotlin-reflect        → 2.3.10     kotlin-reflect        → 2.3.10
 kotlinx-serialization → FAILED     kotlinx-serialization → 1.9.0
 ```
 
-BOM이 적용된 리프에서는 버전이 채워진다. 플러그인이 없는 유령에서는 빈 채로 남는다.
+BOM이 적용된 리프에서는 버전이 채워지지만, 플러그인이 없는 중간 프로젝트에서는 빈 값으로 남는다.
 
 ## 여태 아무도 못 만난 이유
 
@@ -92,7 +92,7 @@ Dockerfile:16       ./gradlew :app:bootJar --no-daemon
 build_push.yml:58   ./gradlew test --no-daemon
 ```
 
-둘 다 유령 프로젝트의 설정을 **해석하지 않는다.** 유령은 누구의 의존성도 아니라서 태스크 그래프에 들어오지 않는다. `./gradlew build`처럼 전체 프로젝트를 도는 순간에만 터진다. 사람이 손으로 칠 때만 만난다.
+두 명령 모두 중간 프로젝트의 설정을 **해석하지 않는다.** 해당 프로젝트는 다른 모듈의 의존성이 아니어서 태스크 그래프에 들어오지 않는다. `./gradlew build`처럼 전체 프로젝트를 순회할 때만 문제가 드러났다.
 
 자동화가 특정 경로만 밟으면 그 바깥의 구성 오류는 시간이 지나도 아무도 못 찾는다.
 
@@ -158,6 +158,6 @@ Gradle이 `Could not find group:artifact:`로 죽으면서 리포지토리를 �
 
 - 중첩 include는 선언하지 않은 중간 프로젝트를 만든다.
 - 플러그인은 상속되지 않으므로 BOM은 적용된 프로젝트에서만 버전을 채운다.
-- `subprojects {}`는 그 유령까지 포함한다.
+- `subprojects {}`는 자동 생성된 중간 프로젝트까지 포함한다.
 
 에러 메시지의 안내는 힌트일 뿐 진단이 아니다. 좌표가 어떻게 생겼는지를 먼저 읽는 편이 빠르다.
