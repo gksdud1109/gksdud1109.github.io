@@ -1,5 +1,5 @@
 ---
-title: "Oracle 인덱스 구조 원리 - row는 어디에 어떻게 저장되나"
+title: "Oracle에서 row가 저장되는 구조와 인덱스가 ROWID로 찾아가는 방식"
 date: 2026-05-14 12:00:00 +0900
 categories: [Database]
 tags: [database, oracle, index, b-tree, oltp]

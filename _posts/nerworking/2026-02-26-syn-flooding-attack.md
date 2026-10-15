@@ -1,5 +1,5 @@
 ---
-title: "[네트워킹]DoS/DDoS 공격 총정리 - SYN Flooding부터 Bcrypt DoS까지"
+title: "[네트워킹]DoS/DDoS 공격 유형과 방어 기법"
 date: 2026-02-26 14:00:00 +0900
 categories: [CS]
 tags: [networking, tcp, security, ddos, syn-flooding, slowloris, quic, http2, bcrypt]

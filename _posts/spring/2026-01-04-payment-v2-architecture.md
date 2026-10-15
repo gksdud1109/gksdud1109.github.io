@@ -1,5 +1,5 @@
 ---
-title: "Payment V2 아키텍처 - PG 연동 결제 흐름과 장애 대응 전략"
+title: "PG 호출과 DB 트랜잭션을 분리한 결제 흐름 설계"
 date: 2026-01-04 12:00:00 +0900
 categories: [Spring]
 tags: [spring, payment, toss, architecture, transaction, circuit-breaker]

@@ -1,5 +1,5 @@
 ---
-title: "Redis 자료구조 - List, Set, Sorted Set, Hash, Bitmap 활용 가이드"
+title: "Redis 자료구조별 명령어와 RedisTemplate 사용 예시"
 date: 2025-12-07 13:00:00 +0900
 categories: [Database]
 tags: [database, redis, data-structure, spring, redistemplate]

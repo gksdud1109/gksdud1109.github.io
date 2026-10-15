@@ -1,5 +1,5 @@
 ---
-title: "분산 환경 발급 한도 카운트 전략 - 카운터 row의 함정과 RAC Cache Fusion"
+title: "Oracle RAC에서 발급 한도 COUNT를 카운터 row로 바꾸지 않은 이유"
 date: 2026-05-20 22:00:00 +0900
 categories: [Spring]
 tags: [backend, oracle, concurrency, rac, distributed-system, design]
@@ -204,6 +204,6 @@ COUNT 는 락 없이 병렬인데, 카운터는 한 row 락에 모두 줄 선다
 
 ## 참고
 
-- 별도 글: 「Oracle 인덱스 구조 원리」 (B+Tree, Cache Fusion 맥락)
+- 별도 글: 「Oracle에서 row가 저장되는 구조와 인덱스가 ROWID로 찾아가는 방식」 (B+Tree, Cache Fusion 맥락)
 - 별도 글: 「Oracle 실행계획 읽는 법」 (COUNT 비용·access vs filter)
 - Oracle Database Concepts — *Real Application Clusters: Cache Fusion*

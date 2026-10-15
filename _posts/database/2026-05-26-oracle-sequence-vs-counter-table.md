@@ -8,7 +8,7 @@ description: "발급 한도 조회 비용을 줄이기 위해 SEQUENCE NEXTVAL�
 
 > 발급마다 `COUNT(*)`가 무거우니 SEQUENCE NEXTVAL로 한도 체크하면 비용을 줄일 수 있지 않을까. 합리적으로 보이는 직관이지만, **SEQUENCE는 monotonic ID 생성 도구지 한도 체크 도구가 아니다.** 도구의 원래 의도와 지금 쓰려는 용도의 미스매치를 짚는 글이다.
 >
-> 「분산 환경 발급 한도 카운트 전략」 글의 후속편이다. 이 글은 **SEQ가 한도 도구로 어긋나는 이유**와 **카운터 테이블의 장단점**을 조금 더 좁혀서 본다.
+> 「Oracle RAC에서 발급 한도 COUNT를 카운터 row로 바꾸지 않은 이유」 글의 후속편이다. 이 글은 **SEQ가 한도 도구로 어긋나는 이유**와 **카운터 테이블의 장단점**을 조금 더 좁혀서 본다.
 >
 > 예제 도메인/식별자는 학습용 가상 구성이다.
 
@@ -234,7 +234,7 @@ RAC 구성:
 
 → **카운터 테이블도 항상 충분한 것은 아니다.** 트래픽 양상에 따라 진화가 필요하다.
 
-→ 이 부분은 「분산 환경 발급 한도 카운트 전략」 글의 주요 대안 비교와 연결된다.
+→ 이 부분은 「Oracle RAC에서 발급 한도 COUNT를 카운터 row로 바꾸지 않은 이유」 글의 주요 대안 비교와 연결된다.
 
 ---
 
@@ -487,5 +487,5 @@ repository.insert(entity)
 - Oracle Docs — *Cache Fusion in RAC*
 - AWR Wait Events — *gc buffer busy*, *gc current block* (RAC 진단)
 - Martin Kleppmann — *Designing Data-Intensive Applications* (Chapter 7: 트랜잭션, Chapter 9: 일관성)
-- 별도 글: 「분산 환경 발급 한도 카운트 전략」 — 7가지 옵션(A~G) 비교
-- 별도 글: 「Oracle 인덱스 구조 원리」 — COUNT(*) 비용의 인덱스 측 이해
+- 별도 글: 「Oracle RAC에서 발급 한도 COUNT를 카운터 row로 바꾸지 않은 이유」: 7가지 옵션(A~G) 비교
+- 별도 글: 「Oracle에서 row가 저장되는 구조와 인덱스가 ROWID로 찾아가는 방식」: COUNT(*) 비용의 인덱스 측 이해

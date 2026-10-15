@@ -1,5 +1,5 @@
 ---
-title: "[Kotlin 패턴#2] DTO 설계로 보는 코틀린: sealed interface · data class · companion object · init"
+title: "[Kotlin 패턴#2] DTO 설계로 보는 코틀린"
 date: 2026-05-15 22:00:00 +0900
 categories: [Kotlin]
 tags: [programming, kotlin]

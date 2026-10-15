@@ -1,5 +1,5 @@
 ---
-title: "PostgreSQL + JPA ID 생성 전략 - Sequence 기반 최적화"
+title: "PostgreSQL에서 JPA Sequence 전략과 allocationSize 정하기"
 date: 2025-12-05 12:00:00 +0900
 categories: [Database]
 tags: [database, postgresql, jpa, sequence, batch-insert, hibernate]

@@ -1,5 +1,5 @@
 ---
-title: "OS 동기화 기초 - 임계 구역부터 동기화 도구까지"
+title: "임계 구역 문제와 OS 동기화 도구 정리"
 date: 2026-02-12 12:00:00 +0900
 categories: [Spring]
 tags: [os, synchronization, concurrency, mutex, semaphore, monitor]

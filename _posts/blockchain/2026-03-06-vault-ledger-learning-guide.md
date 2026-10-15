@@ -1,5 +1,5 @@
 ---
-title: "vault-ledger 학습 가이드 — EVM 인덱서와 무결성 감사 시스템 심층 해설"
+title: "vault-ledger로 보는 EVM 인덱서와 무결성 감사 시스템"
 date: 2026-03-06 12:00:00 +0900
 categories: [Blockchain]
 tags: [go, ruby, rails, blockchain, evm, erc-20, merkle-tree, docker, idempotency, postgresql]
@@ -13,9 +13,7 @@ tags: [go, ruby, rails, blockchain, evm, erc-20, merkle-tree, docker, idempotenc
 
 ---
 
-# vault-ledger 학습 가이드
-
-> 작성자 본인을 포함해 :) Go, Ruby, 블록체인이 모두 처음인 분을 위한 심층 해설서. <br>
+> 작성자 본인을 포함해 :) Go, Ruby, 블록체인이 모두 처음인 분을 위한 해설서. <br>
 > 이 프로젝트의 모든 파일이 왜 존재하고 어떻게 연결되는지 설명합니다.
 
 ---

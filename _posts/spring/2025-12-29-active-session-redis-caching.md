@@ -1,5 +1,5 @@
 ---
-title: "ActiveSession Redis 캐싱 - 인증 세션 최적화 전략"
+title: "요청마다 DB에서 조회하던 인증 세션을 Redis로 캐싱하기"
 date: 2025-12-29 12:00:00 +0900
 categories: [Spring]
 tags: [spring, redis, session, authentication, caching, performance]

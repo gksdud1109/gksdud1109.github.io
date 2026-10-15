@@ -1,5 +1,5 @@
 ---
-title: "@Transactional에서 catch했는데 왜 롤백될까 — MyBatis·JPA·Exposed의 서로 다른 사례"
+title: "@Transactional 안에서 catch한 예외가 롤백으로 이어지는 조건"
 date: 2026-06-11 21:00:00 +0900
 categories: [Spring]
 tags: [spring, transaction, jpa, jdbc, mybatis, exposed]

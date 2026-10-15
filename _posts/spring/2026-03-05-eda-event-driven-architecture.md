@@ -1,5 +1,5 @@
 ---
-title: "EDA(Event-Driven Architecture)란 무엇인가 — MSA의 문제를 이벤트로 푸는 법"
+title: "MSA에서 이벤트 기반 아키텍처(EDA)를 쓰는 이유"
 date: 2026-03-05 12:00:00 +0900
 categories: [Spring]
 tags: [spring, eda, event-driven, msa, kafka, pub-sub, architecture]

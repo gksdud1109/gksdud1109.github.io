@@ -1,5 +1,5 @@
 ---
-title: "[Kotlin 패턴#4] 서비스 트랜잭션·동시성 방어 설계: @Transactional 경계 · TOCTOU · 가중 랜덤"
+title: "[Kotlin 패턴#4] 트랜잭션 경계와 동시성 방어로 보는 코틀린"
 date: 2026-05-20 21:00:00 +0900
 categories: [Kotlin]
 tags: [programming, kotlin]

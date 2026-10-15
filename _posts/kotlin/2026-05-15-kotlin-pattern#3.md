@@ -1,5 +1,5 @@
 ---
-title: "[Kotlin 패턴#3] 서비스 레이어로 보는 코틀린: 가시성·SecureRandom·컬렉션 람다·재시도·fire-and-forget"
+title: "[Kotlin 패턴#3] 서비스 레이어로 보는 코틀린"
 date: 2026-05-15 23:00:00 +0900
 categories: [Kotlin]
 tags: [programming, kotlin]

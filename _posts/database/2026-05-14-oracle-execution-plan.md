@@ -6,7 +6,7 @@ tags: [database, oracle, sql, execution-plan, optimizer]
 description: "Oracle 실행계획을 EXPLAIN PLAN과 DBMS_XPLAN으로 떠보고, CBO 옵티마이저 판단 기준과 INDEX RANGE SCAN, access/filter 조건을 읽는 법을 정리한다."
 ---
 
-> 샘플 OLTP 테이블(예시 `SAMPLE_TXN`)의 쿼리로 실행계획을 떠보고 읽는다. 모든 테이블/인덱스/식별자는 학습용 예시 값이다. 인덱스 물리 구조·PGA·OLTP 는 별도 글 「Oracle 인덱스 구조 원리」 참고.
+> 샘플 OLTP 테이블(예시 `SAMPLE_TXN`)의 쿼리로 실행계획을 떠보고 읽는다. 모든 테이블/인덱스/식별자는 학습용 예시 값이다. 인덱스 물리 구조·PGA·OLTP 는 별도 글 「Oracle에서 row가 저장되는 구조와 인덱스가 ROWID로 찾아가는 방식」 참고.
 
 ---
 
@@ -62,7 +62,7 @@ SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY());
 
 → EXPLAIN 순간 `PLAN_TABLE` 에 row 로 저장된다. `DBMS_XPLAN.DISPLAY()`는 보통 최근 또는 지정한 statement_id의 계획을 읽어 보여주며, 필요하면 `PLAN_TABLE` 데이터를 직접 정리한다.
 
-> **Library Cache 는 SGA(공유 메모리) 안에 있다.** 동일 SQL 텍스트, 스키마/권한/세션 환경 등 재사용 조건이 맞으면 여러 세션이 캐시된 커서를 재사용할 수 있다. (SGA/PGA 구분은 「Oracle 인덱스 구조 원리」 6장 참고 — 정렬용 PGA 와 헷갈리지 말 것.)
+> **Library Cache 는 SGA(공유 메모리) 안에 있다.** 동일 SQL 텍스트, 스키마/권한/세션 환경 등 재사용 조건이 맞으면 여러 세션이 캐시된 커서를 재사용할 수 있다. (SGA/PGA 구분은 「Oracle에서 row가 저장되는 구조와 인덱스가 ROWID로 찾아가는 방식」 6장 참고. 정렬용 PGA 와 헷갈리지 말 것.)
 
 ---
 
@@ -356,4 +356,4 @@ WHERE/JOIN 의 **조건식**을 부르는 말. `TENANT_ID = 'TENANT_A'` 같은 �
 ## 참고
 
 - Oracle Database SQL Tuning Guide — *Reading Execution Plans* / *DBMS_XPLAN* (Oracle 공식 문서)
-- 별도 글: 「Oracle 인덱스 구조 원리 — row는 디스크 어디에 어떻게 저장되나」
+- 별도 글: 「Oracle에서 row가 저장되는 구조와 인덱스가 ROWID로 찾아가는 방식」

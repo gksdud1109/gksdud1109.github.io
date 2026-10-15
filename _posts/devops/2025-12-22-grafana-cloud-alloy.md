@@ -1,5 +1,5 @@
 ---
-title: "Grafana Cloud + Alloy 로그 수집 구성 가이드"
+title: "Grafana Cloud와 Alloy로 Spring Boot 로그 수집하기"
 date: 2025-12-22 12:00:00 +0900
 categories: [DevOps]
 tags: [devops, grafana, loki, alloy, logging, monitoring]
