@@ -1,7 +1,7 @@
 # 📌 Pinned Posts 인덱스
 
 > `_posts/` 전체에서 frontmatter에 `pin: true`가 걸린 글 목록.
-> 기준일: 2026-08-12 · 총 **6건**
+> 기준일: 2026-10-26 · 총 **6건**
 > 갱신 방법: `grep -rl '^pin: *true' _posts`
 
 ---
@@ -11,9 +11,9 @@
 | # | 발행일 | 제목 | 보여주는 역량 |
 |---|---|---|---|
 | 1 | 2026-08-10 | [배포 파이프라인은 성공했는데 ECS에는 이전 이미지가 떠 있었다](/posts/green-pipeline-no-deploy/) | ECS·Terraform 배포 검증 |
-| 2 | 2026-08-10 | [executeBatch가 멈춘 원인은 SQL 로깅 라이브러리였다](/posts/executebatch-hang-real-culprit/) | 런타임 분석·배치 성능 개선 |
+| 2 | 2026-08-10 | [executeBatch 지연의 원인은 SQL 로깅 프록시였다](/posts/executebatch-hang-real-culprit/) | 런타임 분석·배치 성능 개선 |
 | 3 | 2026-07-26 | [최근 7일을 다시 조회해 누락된 정산 데이터 복구하기](/posts/self-healing-settlement-batch/) | 원장 정합성·실패 복구·테스트 |
-| 4 | 2026-07-18 | [뒤늦게 들어온 취소까지 반영하는 배치 설계](/posts/existence-is-not-idempotency/) | 멱등성·차액 반영 설계 |
+| 4 | 2026-07-18 | [취소가 빠진 적립 배치를 누적 재계산으로 고치기](/posts/existence-is-not-idempotency/) | 취소 반영·멱등성·차액 계산 |
 | 5 | 2026-03-10 | [동시 요청과 PG 장애 상황에서 결제 로직 검증하기](/posts/payment-v2-stability-test/) | 결제 무결성·장애 시나리오 검증 |
 | 6 | 2026-01-19 | [좌석 선택 API의 동시성 제어 방식 비교](/posts/concurrency-comparison-test/) | 부하테스트·기술 선택 근거 |
 
@@ -23,7 +23,7 @@
 
 ### 실무 문제 해결
 
-- **원장 정합성:** 하루치 증분 처리의 한계를 최근 데이터 재조회와 차액 반영으로 고친 설계와 검증을 두 글로 연결한다.
+- **원장 정합성:** 취소 인자의 부호·계산 순서와 재수집 후 정정을 구분하고, 실패한 날짜의 처리 공백을 7일 재수집으로 메운 과정을 두 글로 연결한다.
 - **성능 개선:** `executeBatch` 자체를 의심했던 초기 결론을 런타임 증거로 바로잡고 실제 병목을 해결한 과정을 보여준다.
 - **운영 검증:** CI 성공 여부와 실제 ECS 런타임 반영을 구분하고, 가변 이미지 태그와 Terraform 상태 비교 문제를 좁힌 기록을 보여준다.
 
